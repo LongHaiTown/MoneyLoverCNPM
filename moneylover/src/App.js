@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { NavbuttonStyle } from "./GlobalStyle";
+import TransactionList from "./components/TransactionList";
+
+
 function Navbar()
 {
   const [isOpen, setIsOpen] = useState(false);
@@ -49,10 +52,25 @@ function Navbar()
     </nav>
   );
 }
+function Information()
+{
+  <h1 
+  onClick={() => console.log("Clicked Tất cả giao dịch!")} 
+  style={{ cursor: "pointer", color: "#007bff" }}
+>
+  Tất cả giao dịch
+</h1>
+}
+
+
 
 function App() {
   return (
-    <Navbar />);
+    <div><Navbar />
+    <Information />
+    <TransactionList /></div>
+  );
+
 }
 
 export default App;
