@@ -1,3 +1,4 @@
+
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
@@ -11,7 +12,9 @@ const GlobalStyles = createGlobalStyle`
   body {
     background-color: #f5f5f5;
   }
+
 `;
+
 export const NavbuttonStyle ={
   padding: "10px 20px",
   backgroundColor: "#007bff",
@@ -19,7 +22,7 @@ export const NavbuttonStyle ={
   border: "none",
   borderRadius: "5px",
   cursor: "pointer",
-   margin:"10px"
+  margin:"20px",
 };
 
 export default GlobalStyles;

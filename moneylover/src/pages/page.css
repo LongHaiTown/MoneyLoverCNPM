@@ -1,0 +1,266 @@
+/* CSS Giao dịch */
+.wallet-section {
+    margin: 20px;
+  }
+  
+  .wallet-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  
+  .wallet-card {
+    width: 200px;
+    padding-right: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 10px;
+    justify-items: center;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 5px;
+    background-color: white;
+  }
+  
+   .wallet-card .header {
+    border-radius: 10px;
+    background-color: rgb(221, 221, 221);
+    width: 116px;
+    height: 30px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-self: center;
+  }
+  
+  /* Phần giao dịch */
+  .transaction-section {
+    margin-top: 20px;
+  }
+  
+  .transaction-input {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .transaction-input input {
+    flex: 1;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+  }
+  
+  .transaction-input button {
+    padding: 8px 12px;
+    border: none;
+    background: black;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .transaction-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .transaction-buttons button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .primary {
+    background: black;
+    color: white;
+  }
+
+  /* CSS thống kê */
+
+  .statistics-container {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  h1 {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+  
+  .summary-btn,
+  .category-btn {
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .summary-btn:hover,
+  .category-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .chart-section {
+    margin-top: 20px;
+  }
+  
+  .ai-analysis {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+  }
+  
+  .ai-analysis h2 {
+    font-size: 22px;
+  }
+  
+  .ai-analysis ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .ai-analysis li {
+    margin: 5px 0;
+  }
+
+  /* CSS Ngân sách */
+
+/* ====== Tổng thể ====== */
+.budget-container {
+  width: 90%;
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+}
+
+/* ====== Tiêu đề chính ====== */
+.budget-header {
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* ====== Các nút tạo / chỉnh sửa ====== */
+.budget-buttons {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+.budget-buttons button {
+  padding: 10px 15px;
+  border: none;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.budget-buttons button:hover {
+  background-color: #d6d6d6;
+}
+
+/* ====== Số tiền còn lại ====== */
+.budget-balance {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.budget-balance span {
+  color: #27ae60;
+  font-size: 20px;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+/* ====== Thanh tiến trình tổng ====== */
+.progress-bar-container {
+  width: 100%;
+  background-color: #e0e0e0;
+  height: 12px;
+  border-radius: 6px;
+  position: relative;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(to right, #27ae60, #2ecc71);
+  border-radius: 6px;
+  width: 50%; /* Sẽ thay đổi theo dữ liệu */
+  transition: width 0.5s ease-in-out;
+}
+
+/* ====== Danh sách danh mục ====== */
+.budget-category {
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: transform 0.3s ease;
+}
+
+.budget-category:hover {
+  transform: scale(1.02);
+}
+
+/* ====== Ảnh danh mục ====== */
+.budget-category img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 12px;
+}
+
+/* ====== Thông tin danh mục ====== */
+.category-details {
+  flex: 1;
+}
+
+.category-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* ====== Thanh tiến trình danh mục ====== */
+.category-progress {
+  width: 100%;
+  background-color: #e0e0e0;
+  height: 6px;
+  border-radius: 5px;
+  margin-top: 5px;
+  position: relative;
+}
+
+.category-progress .progress {
+  height: 100%;
+  background: linear-gradient(to right, #f39c12, #e67e22);
+  border-radius: 5px;
+  width: 30%; /* Thay đổi theo dữ liệu */
+  transition: width 0.5s ease-in-out;
+}
+
+/* ====== Tổng chi tiêu ====== */
+.total-spent {
+  font-size: 14px;
+  color: gray;
+  text-align: right;
+  font-weight: bold;
+}

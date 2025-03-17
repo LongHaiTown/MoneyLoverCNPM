@@ -19,6 +19,15 @@ const transactions = [
       { id: 5, name: "Lương", note: "Job mới done", amount: "+90.000.000 VND" },
       { id: 6, name: "Ăn uống", note: "(ghi chú nếu có)", amount: "-90.000 VND" }
     ],
+  },
+  {
+    date: "Thứ tư, ngày 9/9/2025",
+    total: "+ 99.820.000 VND",
+    items: [
+      { id: 4, name: "Synary", note: "Đen đá hem đường", amount: "-90.000 VND" },
+      { id: 5, name: "Lương", note: "Job mới bú", amount: "+90.000.000 VND" },
+      { id: 6, name: "Ăn uống", note: "Haidilao", amount: "-990.000 VND" }
+    ],
   }
 ];
 
