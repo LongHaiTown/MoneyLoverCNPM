@@ -1,75 +1,72 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar"; 
 import TransactionList from "./components/TransactionList";
 import Budget from "./pages/Budget";
 import Transactions from "./pages/Transactions";
 import Statistics from "./pages/Statistics";
-
-function Information() { 
-  return (
-    <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-around" }}>
-      <h1
-        onClick={() => console.log("Clicked Tất cả giao dịch!")}
-        style={{ cursor: "pointer", color: "#000", paddingLeft: "10px" }}
-      >
-        Tất cả giao dịch
-      </h1>
-      <div
-        style={{
-          width: "200px",
-          paddingRight: "10px",
-          marginRight: "10px",
-          marginTop: "10px",
-          border: "1px solid #ddd",
-          borderRadius: "10px",
-          textAlign: "center",
-          boxShadow: "0px 2px 5px rgba(0,0,0,0.1)",
-          backgroundColor: "white",
-        }}
-      >
-        <div
-          style={{
-            display: "inline-block",
-            backgroundColor: "#ddd",
-            padding: "5px",
-            borderRadius: "5px",
-            fontWeight: "bold",
-          }}
-        >
-          Ví tiền mặt
-        </div>
-        <div style={{ marginTop: "10px" }}>
-          <img
-            src="https://i.pravatar.cc/40" 
-            alt="Avatar"
-            style={{
-              width: "40px",
-              height: "40px",
-              borderRadius: "50%",
-              display: "block",
-              margin: "auto",
-            }}
-          />
-          <p style={{ margin: "5px 0", fontWeight: "bold" }}>Hiện có</p>
-          <p style={{ fontSize: "12px", color: "gray" }}>(500,000 VND)</p>
-        </div>
-      </div>
-    </div>
-  );
-}
+import Information from "./components/Information.js";
+import axios from "axios";
 
 function App() {
+  const [todos, setTodos] = useState([]);
+  const [newTask, setNewTask] = useState("");
+
+  // Lấy danh sách todos từ backend
+  useEffect(() => {
+    const fetchTodos = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/api/todos");
+        setTodos(response.data);
+      } catch (error) {
+        console.error("Lỗi khi lấy todos:", error);
+      }
+    };
+    fetchTodos();
+  }, []);
+
+  // Component hiển thị danh sách todos (tách ra cho rõ ràng)
+  const TodoList = () => (
+    <div>
+      <h2>Danh sách công việc</h2>
+      <input
+        type="text"
+        value={newTask}
+        onChange={(e) => setNewTask(e.target.value)}
+        placeholder="Nhập công việc mới"
+      />
+      <button onClick={handleAddTodo}>Thêm</button>
+      <ul>
+        {todos.map((todo) => (
+          <li key={todo.id}>
+            {todo.task} - {todo.completed ? "Đã hoàn thành" : "Chưa hoàn thành"}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+
+  // Hàm thêm todo mới
+  const handleAddTodo = async () => {
+    if (!newTask) return;
+    try {
+      const response = await axios.post("http://localhost:5000/api/todos", { task: newTask });
+      setTodos([...todos, response.data]);
+      setNewTask("");
+    } catch (error) {
+      console.error("Lỗi khi thêm todo:", error);
+    }
+  };
+
   return (
     <Router>
       <Navbar />
       <Information />
-      <TransactionList />
-
       <Routes>
-        <Route path="/Transactions" element={<Transactions />} />
-        <Route path="/Budget" element={<Budget />} />
-        <Route path="/Statistics" element={<Statistics />} />
+        <Route path="/" element={<TodoList />} /> {/* Trang chính hiển thị todos */}
+        <Route path="/transactions" element={<Transactions />} />
+        <Route path="/budget" element={<Budget />} />
+        <Route path="/statistics" element={<Statistics />} />
       </Routes>
     </Router>
   );
