@@ -2,35 +2,9 @@ import { useEffect, useState } from 'react';
 import axios from 'axios'; // Nếu dùng axios
 
 function Information() { 
-  const [users, setUsers] = useState([]);
 
-  const [message, setMessage] = useState('');
-
-  useEffect(() => {
-    // Gọi API từ backend
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('http://localhost:5000/api/hello');
-        // Nếu dùng fetch:
-        // const response = await fetch('http://localhost:5000/api/hello');
-        // const data = await response.json();
-        setMessage(response.data.message);
-      } catch (error) {
-        console.error('Lỗi khi gọi API:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
   return (
     <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-around" }}>
-      <p>Phản hồi từ backend: {message}</p>
-      <h1
-        onClick={() => console.log("Clicked Tất cả giao dịch!")}
-        style={{ cursor: "pointer", color: "#000", paddingLeft: "10px" }}
-      >
-        Tất cả giao dịch
-      </h1>
       <div
         style={{
           width: "200px",

@@ -13,6 +13,11 @@ const Category = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    type: {
+      type: DataTypes.ENUM("income", "expense"),
+      allowNull: false,
+      defaultValue: "expense",
+    },
   },
   { timestamps: false }
 );
@@ -20,19 +25,19 @@ const Category = sequelize.define(
 // Lấy tất cả danh mục
 Category.getAll = async () => {
   return await Category.findAll({
-    attributes: ["id", "name"], // Chỉ lấy id và name
+    attributes: ["id", "name", "type"],
   });
 };
 
 // Tạo danh mục mới
 Category.createCategory = async (data) => {
-  const { name } = data;
+  const { name, type } = data;
 
-  if (!name) {
-    throw new Error("Category name is required!");
+  if (!name || !type) {
+    throw new Error("Category name and type are required!");
   }
 
-  const category = await Category.create({ name });
+  const category = await Category.create({ name, type });
   return category.id;
 };
 
