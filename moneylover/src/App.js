@@ -31,10 +31,14 @@
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ExpenseList from "./pages/ExpenseList";
+import BudgetList from "./pages/BudgetList";
 
 function App() {
   return (
+    <div>
     <ExpenseList/>
+    <BudgetList/>
+    </div>
   );
 }
 

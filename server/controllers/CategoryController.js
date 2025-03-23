@@ -1,16 +1,31 @@
 const Category = require("../models/CategoryModel");
 
 exports.getAllCategories = async (req, res) => {
-  const categories = await Category.getAll();
-  res.json(categories);
+  try {
+    const categories = await Category.getAll(); // Gọi hàm getAll
+    res.json(categories);
+  } catch (err) {
+    console.error("❌ Lỗi trong getAllCategories:", err.message);
+    res.status(500).json({ error: "Lỗi server" });
+  }
 };
 
 exports.createCategory = async (req, res) => {
-  const id = await Category.create(req.body);
-  res.json({ id });
+  try {
+    const id = await Category.createCategory(req.body); // Gọi hàm createCategory
+    res.status(201).json({ id });
+  } catch (err) {
+    console.error("❌ Lỗi trong createCategory:", err.message);
+    res.status(400).json({ error: err.message });
+  }
 };
 
 exports.deleteCategory = async (req, res) => {
-  await Category.delete(req.params.id);
-  res.sendStatus(200);
+  try {
+    await Category.delete(req.params.id); // Gọi hàm delete
+    res.sendStatus(200);
+  } catch (err) {
+    console.error("❌ Lỗi trong deleteCategory:", err.message);
+    res.status(400).json({ error: err.message });
+  }
 };

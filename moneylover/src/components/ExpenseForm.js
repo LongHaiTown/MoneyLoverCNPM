@@ -10,7 +10,7 @@ const ExpenseForm = ({ onSubmit, expense }) => {
 
   useEffect(() => {
     getWallets().then((res) => setWallets(res.data));
-    // getCategories().then((res) => setCategories(res.data));
+    getCategories().then((res) => setCategories(res.data));
   }, []);
 
   const handleChange = (e) => {
@@ -45,13 +45,19 @@ const ExpenseForm = ({ onSubmit, expense }) => {
         onChange={handleChange}
         required
       />
-      <input
-        name="category_id"
-        value={formData.category_id}
-        onChange={handleChange}
-        required
-      >
-      </input>
+      <select
+      name="category_id"
+      value={formData.category_id}
+      onChange={handleChange}
+      required
+      > 
+        <option value="">Select Category</option>
+        {categories.map((cat) => (
+          <option key={cat.id} value={cat.id}>
+            {cat.name}
+          </option>
+        ))}
+      </select>
       <select
         name="wallet_id"
         value={formData.wallet_id}
