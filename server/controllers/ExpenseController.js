@@ -1,36 +1,35 @@
 const Expense = require("../models/ExpenseModel");
 
+exports.createExpense = async (req, res) => {
+  try {
+    console.log("📌 Dữ liệu nhận từ client:", req.body);
+    if (!req.body || Object.keys(req.body).length === 0) {
+      return res.status(400).json({ error: "Dữ liệu body rỗng" });
+    }
+    const expense = await Expense.create(req.body); // Sequelize tự xử lý
+    res.status(201).json({ id: expense.id });
+  } catch (err) {
+    console.error("❌ Lỗi trong createExpense:", err);
+    res.status(500).json({ error: "Lỗi server khi tạo expense" });
+  }
+};
+
 exports.getAllExpenses = async (req, res) => {
   try {
     const expenses = await Expense.getAll();
     res.json(expenses);
   } catch (err) {
-    console.error("Lỗi trong getAllExpenses:", err);
+    console.error("❌ Lỗi trong getAllExpenses:", err);
     res.status(500).json({ error: "Lỗi server" });
   }
 };
 
-exports.createExpense = async (req, res) => {
-  alert("Hello");
-  console.log("📌 Dữ liệu nhận được:", req.body);  // Kiểm tra dữ liệu đầu vào
-  const id = await Expense.create(req.body);
-  res.json({ id });
-};
-
 exports.deleteExpense = async (req, res) => {
   try {
-      const { id } = req.params;
-      console.log("📌 ID nhận được:", id);  // Debug xem ID có bị undefined không
-
-      if (!id) {
-          return res.status(400).json({ error: "Thiếu ID để xóa" });
-      }
-
-      await Expense.delete(id);
-      res.status(200).json({ message: "Xóa thành công!" });
-  } catch (error) {
-      console.error("❌ Lỗi khi xóa expense:", error);
-      res.status(500).json({ error: error.message });
+    await Expense.delete(req.params.id);
+    res.sendStatus(200);
+  } catch (err) {
+    console.error("❌ Lỗi trong deleteExpense:", err);
+    res.status(500).json({ error: "Lỗi server" });
   }
 };
-
