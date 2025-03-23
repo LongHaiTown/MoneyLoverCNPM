@@ -1,35 +1,26 @@
-const sequelize = require("../config/db"); // Sequelize instance
+const sequelize = require("../config/db");
 const { DataTypes } = require("sequelize");
 
-const Expense = sequelize.define("expense", {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
+const Expense = sequelize.define(
+  "expense",
+  {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    title: { type: DataTypes.STRING, allowNull: false },
+    amount: { type: DataTypes.FLOAT, allowNull: false },
+    date: { type: DataTypes.DATE },
+    category_id: { type: DataTypes.INTEGER },
+    wallet_id: { type: DataTypes.INTEGER, allowNull: false }, // Thêm wallet_id
   },
-  title: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  amount: {
-    type: DataTypes.FLOAT,
-    allowNull: false,
-  },
-  date: {
-    type: DataTypes.DATE,
-  },
-  category_id: {
-    type: DataTypes.INTEGER,
-  },
-  
-},{
-  timestamps: false, // Tắt createdAt và updatedAt
-});
+  { timestamps: false }
+);
 
 // Phương thức getAll
 Expense.getAll = async () => {
   return await Expense.findAll({
-    include: [{ model: sequelize.models.category, attributes: ["name"] }],
+    include: [
+      { model: sequelize.models.category, attributes: ["name"] },
+      { model: sequelize.models.wallet, attributes: ["name"] }, // Thêm include wallet
+    ],
   });
 };
 
@@ -37,11 +28,12 @@ Expense.getAll = async () => {
 Expense.getById = async (id) => {
   return await Expense.findOne({
     where: { id },
-    include: [{ model: sequelize.models.category, attributes: ["name"] }],
+    include: [
+      { model: sequelize.models.category, attributes: ["name"] },
+      { model: sequelize.models.wallet, attributes: ["name"] },
+    ],
   });
 };
-
-// Không cần định nghĩa create, Sequelize đã có sẵn Model.create
 
 // Phương thức delete
 Expense.delete = async (id) => {

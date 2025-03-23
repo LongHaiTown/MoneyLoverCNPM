@@ -17,16 +17,15 @@ const ExpenseList = () => {
       amount: parseFloat(data.amount.replace(/\./g, "")),
       date: data.date,
       category_id: parseInt(data.category_id),
+      wallet_id: parseInt(data.wallet_id), // Thêm wallet_id
     };
-
     console.log("📌 Dữ liệu gửi đi:", formattedData);
-
     createExpense(formattedData)
       .then((res) => {
         console.log("✅ Server phản hồi:", res.data);
-        return getExpenses(); // Gọi lại API để cập nhật danh sách
+        return getExpenses();
       })
-      .then((res) => setExpenses(res.data)) // Cập nhật state
+      .then((res) => setExpenses(res.data))
       .catch((err) => console.error("❌ Lỗi khi tạo expense:", err));
   };
 
@@ -34,9 +33,9 @@ const ExpenseList = () => {
     deleteExpense(id)
       .then(() => {
         console.log("✅ Đã xóa expense với ID:", id);
-        return getExpenses(); // Gọi lại API để lấy danh sách mới
+        return getExpenses();
       })
-      .then((res) => setExpenses(res.data)) // Cập nhật state với danh sách mới
+      .then((res) => setExpenses(res.data))
       .catch((err) => console.error("❌ Lỗi khi xóa expense:", err));
   };
 
@@ -47,7 +46,8 @@ const ExpenseList = () => {
         <div key={expense.id}>
           <span>
             {expense.title} - ${expense.amount} - {expense.date} - Category:{" "}
-            {expense.category_id}
+            {expense.category?.name || expense.category_id} - Wallet:{" "}
+            {expense.wallet?.name || expense.wallet_id}
           </span>
           <button onClick={() => handleDelete(expense.id)}>Delete</button>
         </div>
