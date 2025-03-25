@@ -23,3 +23,14 @@ exports.createBudget = async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 };
+
+exports.deleteBudget = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await Budget.deleteBudget(id);
+    res.status(200).json(result);
+  } catch (err) {
+    console.error("❌ Lỗi trong deleteBudget:", err.message);
+    res.status(400).json({ error: err.message });
+  }
+};

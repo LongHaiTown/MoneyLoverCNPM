@@ -1,52 +1,82 @@
 .transaction-list {
-  padding: 20px;
   display: flex;
   flex-direction: column;
+  gap: 20px;
+}
+
+.transaction-list p {
+  text-align: center;
+  color: #666;
 }
 
 .transaction-group {
-  background: #efeeee;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.transaction-group-header {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
   border-radius: 10px;
-  box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.1);
-  padding: 15px;
-  margin-bottom: 20px;
+  padding: 10px;
+  margin-bottom: 10px;
 }
 
 .transaction-date {
-  font-size: 18px;
+  font-size: 1.2rem;
   font-weight: bold;
+  margin: 0 0 10px 0;
+  color: #333;
 }
 
 .transaction-total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.transaction-total p {
+  margin: 0;
+}
+
+.income {
   color: blue;
+  font-weight: bold;
+}
+
+.expense {
+  color: red;
   font-weight: bold;
 }
 
 .transaction-item {
   display: flex;
   justify-content: space-between;
-  padding: 10px 0;
-  border-top: 1px solid #000;
-  border-bottom: 1px solid #000;
+  align-items: center;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.transaction-details {
+  display: flex;
+  flex-direction: column;
 }
 
 .transaction-name {
   font-weight: bold;
+  margin-bottom: 5px;
 }
 
 .transaction-note {
-  font-size: 12px;
-  color: gray;
+  color: #666;
+  font-size: 0.9rem;
 }
 
 .transaction-amount {
   font-weight: bold;
-}
-
-.income {
-  color: blue;
-}
-
-.expense {
-  color: red;
+  font-size: 1rem;
 }

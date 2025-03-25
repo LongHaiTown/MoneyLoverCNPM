@@ -110,5 +110,14 @@ Budget.createBudget = async (data) => {
 
   return budget;
 };
+// Xóa ngân sách
+Budget.deleteBudget = async (id) => {
+  const budget = await Budget.findByPk(id);
+  if (!budget) {
+    throw new Error("Budget not found!");
+  }
+  await budget.destroy();
+  return { message: "Budget deleted successfully" };
+};
 
 module.exports = Budget;

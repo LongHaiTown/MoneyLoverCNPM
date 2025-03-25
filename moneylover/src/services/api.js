@@ -16,3 +16,4 @@ export const getWallets = () => axios.get(`${API_URL}/wallets`);
 // export const getBudgets = (params) => axios.get(`${API_URL}/budgets`, { params });
 export const getBudgets = (params) => axios.get(`${API_URL}/budgets`, params);
 export const createBudget = (data) => axios.post(`${API_URL}/budgets`, data);
+export const deleteBudget = (id) => axios.delete(`${API_URL}/budgets/${id}`);

@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
-import TransactionList from "../components/TransactionList";
-import ExpenseForm from "../components/ExpenseForm";
 import { getWallets, getExpenses, createExpense } from "../services/api";
-import "../pages/page.css";
+import ExpenseForm from "../components/ExpenseForm";
+import TransactionList from "../components/TransactionList";
+import ExpenseList from "../pages/ExpenseList";
+import "./Transactions.css";
 
 const Transactions = () => {
   const [wallets, setWallets] = useState([]);
   const [expenses, setExpenses] = useState([]);
-  const [showForm, setShowForm] = useState(false); // Hiển thị form nhập giao dịch
-  const [quickTransaction, setQuickTransaction] = useState(""); // Lưu giá trị input giao dịch nhanh
+  const [showForm, setShowForm] = useState(false);
+  const [showExpenseList, setShowExpenseList] = useState(false);
+  const [quickTransaction, setQuickTransaction] = useState("");
 
-  // Lấy danh sách ví
   const fetchWallets = async () => {
     try {
       const res = await getWallets();
@@ -21,7 +22,6 @@ const Transactions = () => {
     }
   };
 
-  // Lấy danh sách giao dịch
   const fetchExpenses = async () => {
     try {
       const res = await getExpenses();
@@ -32,33 +32,40 @@ const Transactions = () => {
     }
   };
 
-  // Gọi API khi component được render
   useEffect(() => {
     fetchWallets();
     fetchExpenses();
   }, []);
 
-  // Xử lý tạo giao dịch nhanh từ input
+// Calculate the balance for each wallet
+const calculateWalletBalance = (walletId) => {
+  return expenses
+    .filter((expense) => expense.wallet_id === walletId)
+    .reduce((total, expense) => {
+      const type = expense.category?.type || "expense"; // Default to "expense" if category.type is undefined
+      return total + (type === "income" ? expense.amount : -expense.amount);
+    }, 0);
+};
+
   const handleQuickTransaction = async () => {
     if (!quickTransaction) return;
 
     try {
       const data = {
         title: quickTransaction,
-        amount: 0, // Có thể thêm logic để người dùng nhập số tiền
-        date: new Date().toISOString().split("T")[0], // Ngày hiện tại
-        category_id: 1, // Mặc định category_id (có thể thêm logic để chọn)
-        wallet_id: 1, // Mặc định wallet_id (có thể thêm logic để chọn)
+        amount: 0,
+        date: new Date().toISOString().split("T")[0],
+        category_id: 1,
+        wallet_id: 1,
       };
       await createExpense(data);
-      setQuickTransaction(""); // Reset input
-      fetchExpenses(); // Cập nhật danh sách giao dịch
+      setQuickTransaction("");
+      fetchExpenses();
     } catch (err) {
       console.error("❌ Lỗi khi tạo giao dịch nhanh:", err);
     }
   };
 
-  // Xử lý tạo giao dịch từ form
   const handleCreateExpense = (data) => {
     const formattedData = {
       title: data.title,
@@ -69,48 +76,47 @@ const Transactions = () => {
     };
     createExpense(formattedData)
       .then(() => {
-        fetchExpenses(); // Cập nhật danh sách giao dịch
-        setShowForm(false); // Ẩn form sau khi tạo
+        fetchExpenses();
+        setShowForm(false);
       })
       .catch((err) => console.error("❌ Lỗi khi tạo giao dịch:", err));
   };
 
   return (
-    <div className="app-container">
-      <header className="app-header">
-        <div
-          className="header-title"
-          style={{
-            backgroundColor: "gray",
-            width: "100%",
-            height: "110px",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            textAlign: "center",
-          }}
-        >
-          <h1 style={{ margin: "0px" }}>Money lover fake</h1>
-          <p>Fake nhưng thu chi là chuẩn</p>
-        </div>
+    <div className="transactions-container">
+      <header className="header">
+        <h1>Money lover fake</h1>
+        <p>Fake nhưng thu chi là chuẩn</p>
       </header>
 
       <section className="wallet-section">
         <h2>Ví của bạn</h2>
         <div className="wallet-container">
-          {wallets.map((wallet) => (
-            <div key={wallet.id} className="wallet-card">
-              <p className="header">{wallet.name}</p>
-              <p>Hiện có: ${wallet.balance}</p>
-            </div>
-          ))}
+          {wallets.length > 0 ? (
+            wallets.map((wallet) => {
+              const balance = calculateWalletBalance(wallet.id);
+              return (
+                <div key={wallet.id} className="wallet-card">
+                  <p className="wallet-title">{wallet.name}</p>
+                  <p className="wallet-balance">
+                    Hiện có <br />
+                    <span style={{ color: balance >= 0 ? "blue" : "red" }}>
+                      {balance >= 0 ? "+" : ""}
+                      {Math.abs(balance).toLocaleString()} VND
+                    </span>
+                  </p>
+                </div>
+              );
+            })
+          ) : (
+            <p>Chưa có ví nào.</p>
+          )}
         </div>
       </section>
 
       <section className="transaction-section">
         <h2>Giao dịch</h2>
-        <div className="transaction-input">
+        <div className="quick-transaction">
           <input
             type="text"
             placeholder="Hôm nay bạn tiêu gì 🤑🤔?"
@@ -123,7 +129,9 @@ const Transactions = () => {
           <button className="primary" onClick={() => setShowForm(true)}>
             Nhập giao dịch mới
           </button>
-          <button onClick={fetchExpenses}>Xem tất cả giao dịch</button>
+          <button onClick={() => setShowExpenseList(true)}>
+            Xem tất cả giao dịch
+          </button>
         </div>
         {showForm && (
           <div className="modal">
@@ -133,6 +141,18 @@ const Transactions = () => {
             </div>
           </div>
         )}
+        {showExpenseList && (
+          <div className="modal">
+            <div className="modal-content">
+              <button onClick={() => setShowExpenseList(false)}>Đóng</button>
+              <ExpenseList onUpdate={fetchExpenses} />
+            </div>
+          </div>
+        )}
+      </section>
+
+      <section className="recent-transactions">
+        <h2>Giao dịch gần đây</h2>
         <TransactionList expenses={expenses} />
       </section>
     </div>
