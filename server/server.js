@@ -49,10 +49,11 @@ sequelize.sync({ force: false }) // force: false để không xóa dữ liệu h
   .then(async () => {
     console.log("✅ Đã kết nối database thành công.");
     await Category.initializeSampleData(); // Tạo dữ liệu mẫu
+    await Wallet.initializeSampleData();   // Tạo dữ liệu mẫu cho Wallet
   })
   .catch((err) => {
     console.error("❌ Lỗi kết nối database:", err.message);
   });
-  
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
