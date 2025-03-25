@@ -26,8 +26,8 @@ Expense.getAll = async (filters = {}) => {
   return await Expense.findAll({
     where,
     include: [
-      { model: sequelize.models.category, attributes: ["name", "type"] }, // Lấy cả name và type
-      { model: sequelize.models.wallet, attributes: ["name"] },
+      { model: sequelize.models.category, attributes: ["id","name", "type"] }, // Lấy cả name và type
+      { model: sequelize.models.wallet, attributes: ["id","name"] },
     ],
   });
 };

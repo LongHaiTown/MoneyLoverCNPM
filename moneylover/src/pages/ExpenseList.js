@@ -133,11 +133,6 @@ const ExpenseList = ({ onUpdate }) => {
           ))}
         </div>
       )}
-
-      <div className="expense-form-section">
-        <h3>Thêm giao dịch mới</h3>
-        <ExpenseForm onSubmit={handleSubmit} />
-      </div>
     </div>
   );
 };

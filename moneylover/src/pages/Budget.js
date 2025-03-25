@@ -1,71 +1,91 @@
-import React, { useState } from "react";
-import "../pages/page.css";
+import React, { useState, useEffect } from "react";
+import "../pages/Budgets.css"
+import BudgetForm from "../components/BudgetForm"
+import { getBudgets, createBudget } from "../services/api";
 
 const Budget = () => {
-  const [budgets, setBudgets] = useState([
-    { id: 1, category: "Ăn uống", total: 5000000, spent: 2000000 },
-    { id: 2, category: "Học phí", total: 10000000, spent: 5000000 },
-  ]);
-  const [newBudget, setNewBudget] = useState({ category: "", total: "" });
+  const [budgets, setBudgets] = useState([]);
+  const [month, setMonth] = useState(new Date().getMonth() + 1);
+  const [year, setYear] = useState(new Date().getFullYear());
 
-  // Thêm ngân sách mới
-  const addBudget = () => {
-    if (newBudget.category && newBudget.total) {
-      setBudgets([
-        ...budgets,
-        { id: budgets.length + 1, category: newBudget.category, total: Number(newBudget.total), spent: 0 },
-      ]);
-      setNewBudget({ category: "", total: "" });
-    }
+  const fetchBudgets = () => {
+    getBudgets({ params: { month, year } })
+    
+      .then((res) => {
+        console.log("Danh sách Ngân sách nhận được ", res.data); // Kiểm tra dữ liệu từ server
+        setBudgets(res.data);
+      })  
+      .catch((err) => console.error("❌ Lỗi khi lấy budgets:", err));
   };
 
+  useEffect(() => {
+    fetchBudgets();
+  }, [month, year]);
+ const handleCreateBudget = (data) => {
+     console.log("📌 Dữ liệu gửi đi để tạo budget:", data);
+     createBudget(data)
+       .then((res) => {
+         console.log("✅ Tạo budget thành công, phản hồi từ server:", res.data);
+         fetchBudgets(); // Cập nhật danh sách sau khi tạo
+       })
+       .catch((err) => {
+         console.error("❌ Lỗi khi tạo budget:", err.response ? err.response.data : err.message);
+       });
+   };
+   
   return (
     <div className="budget-container">
       <h2 className="budget-header">Ngân sách</h2>
-
-      {/* Nút tạo ngân sách */}
-      <div className="budget-buttons">
-        <input
-          type="text"
-          className="input-field"
-          placeholder="Danh mục"
-          value={newBudget.category}
-          onChange={(e) => setNewBudget({ ...newBudget, category: e.target.value })}
-        />
-        <input
-          type="number"
-          className="input-field"
-          placeholder="Số tiền"
-          value={newBudget.total}
-          onChange={(e) => setNewBudget({ ...newBudget, total: e.target.value })}
-        />
-        <button className="btn-create" onClick={addBudget}>Tạo ngân sách mới</button>
+      <div>
+        <label>
+          Month:
+          <input
+            type="number"
+            value={month}
+            onChange={(e) => setMonth(parseInt(e.target.value))}
+            min="1"
+            max="12"
+          />
+        </label>
+        <label>
+          Year:
+          <input
+            type="number"
+            value={year}
+            onChange={(e) => setYear(parseInt(e.target.value))}
+            min="2000"
+            max="2100"
+          />
+        </label>
       </div>
-
+      <BudgetForm onSubmit={handleCreateBudget}/>
       {/* Tổng tiền có thể chi */}
-      <div className="budget-balance">
+      {/* <div className="budget-balance">
         <p>Số tiền bạn có thể chi: </p>
         <span>9.999.999 VND</span>
       </div>
       <div className="progress-bar-container">
         <div className="progress-bar" style={{ width: "75%" }}></div>
-      </div>
-
+      </div> */}
       {/* Danh sách ngân sách */}
       <div className="budget-list">
-        {budgets.map((budget) => (
+        {budgets.map((budget) => 
+        {
+          const progress = budget.amount > 0 ? (budget.used_amount / budget.amount) * 100 : 0;
+          return (
           <div key={budget.id} className="budget-category">
             <div className="category-details">
-              <h3 className="category-title">{budget.category}</h3>
+              <h3 className="category-title">{budget["category.name"]}</h3>
               <div className="category-progress">
-                <div className="progress" style={{ width: `${(budget.spent / budget.total) * 100}%` }}></div>
+                <div className="progress"  style={{ width: `${progress}%` }}></div>
               </div>
               <p className="total-spent">
-                Tổng đã chi: {budget.spent.toLocaleString()} VND | Còn lại: {(budget.total - budget.spent).toLocaleString()} VND
+                Tổng đã chi: {budget.used_amount.toLocaleString()} VND | Còn lại: {(budget.amount - budget.used_amount).toLocaleString()} VND
               </p>
             </div>
           </div>
-        ))}
+        )} )}
+        
       </div>
     </div>
   );

@@ -3,6 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar"; 
 import TransactionList from "./components/TransactionList";
 import BudgetList from "./pages/BudgetList";
+import Budget from "./pages/Budget";
+import BudgetForm  from "./components/BudgetForm";
+
 import Transactions from "./pages/Transactions";
 import Statistics from "./pages/Statistics";
 import Information from "./components/Information"; 
@@ -14,7 +17,7 @@ function App() {
     <Router>
       <Navbar />
       <Transactions />
-      <BudgetList />
+      <Budget/>
       <Statistics />
       <Routes>
         <Route path="/Transactions" element={<Transactions />} />

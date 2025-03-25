@@ -136,7 +136,10 @@ const calculateWalletBalance = (walletId) => {
         {showForm && (
           <div className="modal">
             <div className="modal-content">
-              <button onClick={() => setShowForm(false)}>Đóng</button>
+              <div className="modal-header">
+                <button className="close-button" onClick={() => setShowForm(false)}>Đóng</button>
+                <h3>Thêm mới giao dịch</h3>
+              </div>
               <ExpenseForm onSubmit={handleCreateExpense} />
             </div>
           </div>
@@ -144,8 +147,11 @@ const calculateWalletBalance = (walletId) => {
         {showExpenseList && (
           <div className="modal">
             <div className="modal-content">
-              <button onClick={() => setShowExpenseList(false)}>Đóng</button>
-              <ExpenseList onUpdate={fetchExpenses} />
+              <div className="modal-header">
+                <button className="close-button" onClick={() => setShowExpenseList(false)}>Đóng</button>
+                <h3>Tất cả giao dịch</h3>
+              </div>
+              <ExpenseList onUpdate={fetchExpenses} expenses={expenses} />
             </div>
           </div>
         )}

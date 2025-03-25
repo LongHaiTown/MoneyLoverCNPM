@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { getWallets, getCategories } from "../services/api";
+import "./ExpenseForm.css"; // Add a new CSS file for ExpenseForm
 
 const ExpenseForm = ({ onSubmit, expense }) => {
   const [formData, setFormData] = useState(
@@ -19,26 +20,30 @@ const ExpenseForm = ({ onSubmit, expense }) => {
 
   return (
     <form
+      className="expense-form"
       onSubmit={(e) => {
         e.preventDefault();
         onSubmit(formData);
       }}
     >
       <input
+        className="form-input"
         name="title"
         value={formData.title}
         onChange={handleChange}
-        placeholder="Title"
+        placeholder="Tiêu đề"
         required
       />
       <input
+        className="form-input"
         name="amount"
         value={formData.amount}
         onChange={handleChange}
-        placeholder="Amount"
+        placeholder="Số tiền"
         required
       />
       <input
+        className="form-input"
         name="date"
         type="date"
         value={formData.date}
@@ -46,12 +51,13 @@ const ExpenseForm = ({ onSubmit, expense }) => {
         required
       />
       <select
-      name="category_id"
-      value={formData.category_id}
-      onChange={handleChange}
-      required
-      > 
-        <option value="">Select Category</option>
+        className="form-select"
+        name="category_id"
+        value={formData.category_id}
+        onChange={handleChange}
+        required
+      >
+        <option value="">Chọn danh mục</option>
         {categories.map((cat) => (
           <option key={cat.id} value={cat.id}>
             {cat.name}
@@ -59,19 +65,20 @@ const ExpenseForm = ({ onSubmit, expense }) => {
         ))}
       </select>
       <select
+        className="form-select"
         name="wallet_id"
         value={formData.wallet_id}
         onChange={handleChange}
         required
       >
-        <option value="">Select Wallet</option>
+        <option value="">Chọn ví</option>
         {wallets.map((wallet) => (
           <option key={wallet.id} value={wallet.id}>
             {wallet.name}
           </option>
         ))}
       </select>
-      <button type="submit">Save</button>
+      <button className="form-submit" type="submit">Lưu</button>
     </form>
   );
 };
