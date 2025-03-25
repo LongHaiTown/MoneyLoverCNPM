@@ -54,5 +54,27 @@ Category.delete = async (id) => {
 
   await category.destroy();
 };
+// Hàm khởi tạo dữ liệu mẫu
+Category.initializeSampleData = async () => {
+  try {
+    const count = await Category.count();
+    if (count === 0) { // Chỉ tạo dữ liệu mẫu nếu bảng trống
+      const sampleCategories = [
+        { name: "Lương", type: "income" },
+        { name: "Thưởng", type: "income" },
+        { name: "Ăn uống", type: "expense" },
+        { name: "Mua sắm", type: "expense" },
+        { name: "Hóa đơn", type: "expense" },
+        { name: "Du lịch", type: "expense" },
+      ];
 
+      await Category.bulkCreate(sampleCategories);
+      console.log("✅ Dữ liệu mẫu cho Category đã được tạo.");
+    } else {
+      console.log("ℹ️ Bảng Category đã có dữ liệu, bỏ qua khởi tạo mẫu.");
+    }
+  } catch (err) {
+    console.error("❌ Lỗi khi tạo dữ liệu mẫu:", err.message);
+  }
+};
 module.exports = Category;

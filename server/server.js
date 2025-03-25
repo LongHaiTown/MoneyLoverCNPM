@@ -44,7 +44,15 @@ Budget.belongsTo(Category, { foreignKey: "category_id" });
 Budget.hasMany(Expense, { foreignKey: "category_id", sourceKey: "category_id" });
 Expense.belongsTo(Budget, { foreignKey: "category_id", targetKey: "category_id" });
 
-sequelize.sync().then(() => console.log("✅ Database synced"));
-
+// Kết nối database và tạo dữ liệu mẫu
+sequelize.sync({ force: false }) // force: false để không xóa dữ liệu hiện có
+  .then(async () => {
+    console.log("✅ Đã kết nối database thành công.");
+    await Category.initializeSampleData(); // Tạo dữ liệu mẫu
+  })
+  .catch((err) => {
+    console.error("❌ Lỗi kết nối database:", err.message);
+  });
+  
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
