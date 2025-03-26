@@ -37,18 +37,6 @@ const Transactions = () => {
     fetchExpenses();
   }, []);
 
-// Calculate the balance for each wallet
-const calculateWalletBalance = (walletId) => {
-  const wallet = wallets.find((w) => w.id === walletId);
-  const initialBalance = wallet ? wallet.balance : 0; // Lấy balance từ wallet
-  return expenses
-    .filter((expense) => expense.wallet_id === walletId)
-    .reduce((total, expense) => {
-      const type = expense.category?.type || "expense";
-      return total + (type === "income" ? expense.amount : -expense.amount);
-    }, initialBalance); // Bắt đầu từ initialBalance
-};
-
   const handleQuickTransaction = async () => {
     if (!quickTransaction) return;
 
@@ -63,6 +51,7 @@ const calculateWalletBalance = (walletId) => {
       await createExpense(data);
       setQuickTransaction("");
       fetchExpenses();
+      fetchWallets();
     } catch (err) {
       console.error("❌ Lỗi khi tạo giao dịch nhanh:", err);
     }
@@ -78,18 +67,23 @@ const calculateWalletBalance = (walletId) => {
     };
     createExpense(formattedData)
       .then(() => {
-        fetchExpenses(); // Cập nhật danh sách giao dịch
-        fetchWallets(); // Cập nhật danh sách ví (nếu backend cập nhật balance)
+        fetchExpenses();
+        fetchWallets();
         setShowForm(false);
       })
       .catch((err) => console.error("❌ Lỗi khi tạo giao dịch:", err));
   };
 
   return (
-    <div className="transactions-container" id="transactions" >
+    <div className="transactions-container" id="transactions">
       <header className="header">
         <h1>Money lover fake</h1>
         <p>Fake nhưng thu chi là chuẩn</p>
+        <nav>
+          <button className="active">Giao dịch</button>
+          <button>Ngân sách</button>
+          <button>Thống kê</button>
+        </nav>
       </header>
 
       <section className="wallet-section">
@@ -97,15 +91,19 @@ const calculateWalletBalance = (walletId) => {
         <div className="wallet-container">
           {wallets.length > 0 ? (
             wallets.map((wallet) => {
-              const balance = calculateWalletBalance(wallet.id);
+              const displayBalance = isNaN(wallet.balance) ? 0 : parseFloat(wallet.balance);
               return (
                 <div key={wallet.id} className="wallet-card">
                   <p className="wallet-title">{wallet.name}</p>
                   <p className="wallet-balance">
                     Hiện có <br />
-                    <span style={{ color: balance >= 0 ? "blue" : "red" }}>
-                      {balance >= 0 ? "+" : ""}
-                      {Math.abs(balance).toLocaleString()} VND
+                    <span
+                      style={{
+                        color: displayBalance >= 0 ? "blue" : "red",
+                      }}
+                    >
+                      {displayBalance >= 0 ? "+" : ""}
+                      {Math.abs(displayBalance).toLocaleString()} VND
                     </span>
                   </p>
                 </div>
@@ -122,7 +120,7 @@ const calculateWalletBalance = (walletId) => {
         <div className="quick-transaction">
           <input
             type="text"
-            placeholder="Hôm nay bạn tiêu gì 🤑🤔?"
+            placeholder="Hôm nay bạn tieu gì 🤑🤔?"
             value={quickTransaction}
             onChange={(e) => setQuickTransaction(e.target.value)}
           />
@@ -140,7 +138,12 @@ const calculateWalletBalance = (walletId) => {
           <div className="modal">
             <div className="modal-content">
               <div className="modal-header">
-                <button className="close-button" onClick={() => setShowForm(false)}>Đóng</button>
+                <button
+                  className="close-button"
+                  onClick={() => setShowForm(false)}
+                >
+                  Đóng
+                </button>
                 <h3>Thêm mới giao dịch</h3>
               </div>
               <ExpenseForm onSubmit={handleCreateExpense} />
@@ -151,7 +154,12 @@ const calculateWalletBalance = (walletId) => {
           <div className="modal">
             <div className="modal-content">
               <div className="modal-header">
-                <button className="close-button" onClick={() => setShowExpenseList(false)}>Đóng</button>
+                <button
+                  className="close-button"
+                  onClick={() => setShowExpenseList(false)}
+                >
+                  Đóng
+                </button>
                 <h3>Tất cả giao dịch</h3>
               </div>
               <ExpenseList onUpdate={fetchExpenses} expenses={expenses} />

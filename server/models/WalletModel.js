@@ -1,4 +1,3 @@
-// WalletModel.js
 const sequelize = require("../config/db");
 const { DataTypes } = require("sequelize");
 
@@ -15,9 +14,13 @@ const Wallet = sequelize.define(
       allowNull: false,
     },
     balance: {
-      type: DataTypes.DECIMAL(10, 2), // Số dư với 10 chữ số, 2 số thập phân
+      type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
       defaultValue: 0.00,
+      get() {
+        const value = this.getDataValue("balance");
+        return value === null || isNaN(value) ? 0.00 : parseFloat(value);
+      },
     },
   },
   { timestamps: false }
@@ -38,7 +41,10 @@ Wallet.createWallet = async (data) => {
     throw new Error("Wallet name is required!");
   }
 
-  const wallet = await Wallet.create({ name, balance: balance || 0.00 });
+  const wallet = await Wallet.create({
+    name,
+    balance: isNaN(balance) ? 0.00 : parseFloat(balance) || 0.00,
+  });
   return wallet.id;
 };
 
@@ -60,7 +66,7 @@ Wallet.delete = async (id) => {
 Wallet.initializeSampleData = async () => {
   try {
     const count = await Wallet.count();
-    if (count === 0) { // Chỉ tạo dữ liệu mẫu nếu bảng trống
+    if (count === 0) {
       const sampleWallets = [
         { name: "Ví tiền mặt", balance: 500000.00 },
         { name: "Ngân hàng", balance: 2000000.00 },
