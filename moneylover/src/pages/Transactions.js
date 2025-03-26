@@ -86,7 +86,7 @@ const calculateWalletBalance = (walletId) => {
   };
 
   return (
-    <div className="transactions-container">
+    <div className="transactions-container" id="transactions" >
       <header className="header">
         <h1>Money lover fake</h1>
         <p>Fake nhưng thu chi là chuẩn</p>

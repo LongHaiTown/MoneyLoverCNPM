@@ -4,7 +4,7 @@ import "../pages/page.css"; // File CSS
 
 const Statistics = () => {
   return (
-    <div className="statistics-container">
+    <div className="statistics-container" id="statistics">
       <h1>Thống kê</h1>
       <button className="summary-btn">Tóm tắt cho bạn 🌟🌟🌟</button>
       <button className="category-btn">Thống kê theo danh mục</button>

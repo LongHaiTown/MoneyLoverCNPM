@@ -19,11 +19,6 @@ function App() {
       <Transactions />
       <Budget/>
       <Statistics />
-      <Routes>
-        <Route path="/Transactions" element={<Transactions />} />
-        <Route path="/BudgetList" element={<BudgetList />} />
-        <Route path="/Statistics" element={<Statistics />} />
-      </Routes>
     </Router>
   );
 }
