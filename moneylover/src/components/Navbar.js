@@ -1,8 +1,15 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { BrowserRouter as Link } from "react-router-dom";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+
+  const handleScroll = (sectionId) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <nav
@@ -14,50 +21,44 @@ function Navbar() {
         padding: "10px 20px",
         background: "#fff",
         borderBottom: "1px solid #ddd",
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 1000,
       }}
     >
+      {/* Logo + Menu Toggle */}
       <div style={{ display: "flex", alignItems: "center" }}>
         <div style={{ fontSize: "24px", fontWeight: "bold", marginRight: "20px" }}>
           🅱️🅱️
         </div>
         <button
           onClick={() => setIsOpen(!isOpen)}
-          style={{ fontSize: "20px", fontWeight: "bold", cursor: "pointer", background: "none", border: "none" }}
+          style={{
+            fontSize: "20px",
+            fontWeight: "bold",
+            cursor: "pointer",
+            background: "none",
+            border: "none",
+          }}
         >
-          ☰
         </button>
-        {isOpen && (
-          <ul
-            style={{
-              position: "absolute",
-              top: "50px",
-              left: "20px",
-              background: "white",
-              boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-              borderRadius: "5px",
-              listStyle: "none",
-              padding: "10px",
-              margin: "0",
-              minWidth: "120px",
-            }}
-          >
-            <li><Link to="/">Trang chủ</Link></li>
-            <li><Link to="/Transactions">Giao dịch</Link></li>
-            <li><Link to="/Budget">Ngân sách</Link></li>
-          </ul>
-        )}
       </div>
 
+      {/* Navbar Links */}
       <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-        <Link to="/Transactions" style={{ padding: "5px 10px", textDecoration: "none", color: "#333" }}>
+        <button onClick={() => handleScroll("transactions")} style={{ padding: "5px 10px", textDecoration: "none", color: "#333" }}>
           Giao dịch
-        </Link>
-        <Link to="/Statistics" style={{ padding: "5px 10px", textDecoration: "none", color: "#333" }}>
-          Thống kê
-        </Link>
-        <Link to="/Budget" style={{ padding: "5px 10px", textDecoration: "none", color: "#333" }}>
+        </button>
+        <button onClick={() => handleScroll("budgets")} style={{ padding: "5px 10px", textDecoration: "none", color: "#333" }} >
           Ngân sách
-        </Link>
+        </button>
+        <button onClick={() => handleScroll("statistics")} style={{ padding: "5px 10px", textDecoration: "none", color: "#333" }} >
+          Thống kê
+        </button>
+
+        {/* Button chính */}
         <button
           style={{
             backgroundColor: "#333",
@@ -74,5 +75,6 @@ function Navbar() {
     </nav>
   );
 }
+
 
 export default Navbar;
