@@ -39,12 +39,14 @@ const Transactions = () => {
 
 // Calculate the balance for each wallet
 const calculateWalletBalance = (walletId) => {
+  const wallet = wallets.find((w) => w.id === walletId);
+  const initialBalance = wallet ? wallet.balance : 0; // Lấy balance từ wallet
   return expenses
     .filter((expense) => expense.wallet_id === walletId)
     .reduce((total, expense) => {
-      const type = expense.category?.type || "expense"; // Default to "expense" if category.type is undefined
+      const type = expense.category?.type || "expense";
       return total + (type === "income" ? expense.amount : -expense.amount);
-    }, 0);
+    }, initialBalance); // Bắt đầu từ initialBalance
 };
 
   const handleQuickTransaction = async () => {
@@ -76,7 +78,8 @@ const calculateWalletBalance = (walletId) => {
     };
     createExpense(formattedData)
       .then(() => {
-        fetchExpenses();
+        fetchExpenses(); // Cập nhật danh sách giao dịch
+        fetchWallets(); // Cập nhật danh sách ví (nếu backend cập nhật balance)
         setShowForm(false);
       })
       .catch((err) => console.error("❌ Lỗi khi tạo giao dịch:", err));

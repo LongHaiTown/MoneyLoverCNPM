@@ -1,0 +1,141 @@
+-- Tạo database
+CREATE DATABASE IF NOT EXISTS moneylover
+
+
+
+-- Tạo bảng category
+CREATE TABLE category (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,-- Tạo database
+CREATE DATABASE IF NOT EXISTS moneylover;
+
+-- Tạo bảng category
+CREATE TABLE IF NOT EXISTS category (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    type ENUM('income', 'expense') NOT NULL DEFAULT 'expense',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Tạo bảng wallet
+CREATE TABLE IF NOT EXISTS wallet (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Tạo bảng budget
+CREATE TABLE IF NOT EXISTS budget (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    category_id INT NOT NULL,
+    amount FLOAT NOT NULL,
+    date DATE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (category_id) REFERENCES category(id) ON DELETE CASCADE
+);
+
+-- Tạo bảng expense
+CREATE TABLE IF NOT EXISTS expense (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(255) NOT NULL,
+    amount FLOAT NOT NULL,
+    date DATETIME,
+    category_id INT NOT NULL,
+    wallet_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (category_id) REFERENCES category(id) ON DELETE RESTRICT,
+    FOREIGN KEY (wallet_id) REFERENCES wallet(id) ON DELETE CASCADE
+);
+
+-- Chèn dữ liệu vào bảng category
+INSERT INTO category (name, type) VALUES
+('Lương', 'income'),
+('Ăn uống', 'expense'),
+('Di chuyển', 'expense'),
+('Mua sắm', 'expense'),
+('Tiền nhà', 'expense');
+
+-- Chèn dữ liệu vào bảng wallet
+INSERT INTO wallet (name) VALUES
+('Ví tiền mặt'),
+('Thẻ ngân hàng'),
+('Ví điện tử');
+
+-- Chèn dữ liệu vào bảng budget
+INSERT INTO budget (category_id, amount, date) VALUES
+(2, 2000000, '2025-03-01'),
+(3, 1000000, '2025-03-01'),
+(4, 3000000, '2025-03-01'),
+(5, 5000000, '2025-03-01');
+
+-- Chèn dữ liệu vào bảng expense
+INSERT INTO expense (title, amount, date, category_id, wallet_id) VALUES
+('Ăn trưa', 150000, '2025-03-02 12:30:00', 2, 1),
+('Đi Grab', 80000, '2025-03-03 08:00:00', 3, 2),
+('Mua áo', 1200000, '2025-03-05 15:00:00', 4, 3),
+('Thanh toán tiền nhà', 4800000, '2025-03-01 09:00:00', 5, 2),
+('Cà phê', 50000, '2025-03-04 10:00:00', 2, 1),
+('Thu nhập lương', 15000000, '2025-03-01 08:00:00', 1, 2);
+    type ENUM('income', 'expense') NOT NULL DEFAULT 'expense'
+);
+
+-- Tạo bảng wallet
+CREATE TABLE wallet (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL
+);
+
+-- Tạo bảng budget
+CREATE TABLE budget (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    category_id INT NOT NULL,
+    amount FLOAT NOT NULL,
+    date DATE NOT NULL,
+    FOREIGN KEY (category_id) REFERENCES category(id) ON DELETE CASCADE
+);
+
+-- Tạo bảng expense
+CREATE TABLE expense (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(255) NOT NULL,
+    amount FLOAT NOT NULL,
+    date DATETIME,
+    category_id INT NOT NULL,
+    wallet_id INT NOT NULL,
+    FOREIGN KEY (category_id) REFERENCES category(id) ON DELETE RESTRICT,
+    FOREIGN KEY (wallet_id) REFERENCES wallet(id) ON DELETE CASCADE
+);
+
+-- Chèn dữ liệu vào bảng category
+INSERT INTO category (name, type) VALUES
+('Lương', 'income'),
+('Ăn uống', 'expense'),
+('Di chuyển', 'expense'),
+('Mua sắm', 'expense'),
+('Tiền nhà', 'expense');
+
+-- Chèn dữ liệu vào bảng wallet
+INSERT INTO wallet (name) VALUES
+('Ví tiền mặt'),
+('Thẻ ngân hàng'),
+('Ví điện tử');
+
+-- Chèn dữ liệu vào bảng budget
+INSERT INTO budget (category_id, amount, date) VALUES
+(2, 2000000, '2025-03-01'),
+(3, 1000000, '2025-03-01'),
+(4, 3000000, '2025-03-01'),
+(5, 5000000, '2025-03-01');
+
+-- Chèn dữ liệu vào bảng expense
+INSERT INTO expense (title, amount, date, category_id, wallet_id) VALUES
+('Ăn trưa', 150000, '2025-03-02 12:30:00', 2, 1),
+('Đi Grab', 80000, '2025-03-03 08:00:00', 3, 2),
+('Mua áo', 1200000, '2025-03-05 15:00:00', 4, 3),
+('Thanh toán tiền nhà', 4800000, '2025-03-01 09:00:00', 5, 2),
+('Cà phê', 50000, '2025-03-04 10:00:00', 2, 1),
+('Thu nhập lương', 15000000, '2025-03-01 08:00:00', 1, 2);
