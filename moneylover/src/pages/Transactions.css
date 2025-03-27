@@ -1,180 +1,206 @@
 .transactions-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  .header {
-    background-color: #d3d3d3;
-    padding: 20px;
-    text-align: center;
-    border-radius: 10px;
-    margin-bottom: 20px;
-  }
-  
-  .header h1 {
-    margin: 0;
-    font-size: 2rem;
-    font-weight: bold;
-  }
-  
-  .header p {
-    margin: 5px 0 0;
-    font-size: 1rem;
-    color: #333;
-  }
-  
-  .wallet-section h2,
-  .transaction-section h2,
-  .recent-transactions h2 {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-  }
-  
-  .wallet-container {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 20px;
-  }
-  
-  .wallet-card {
-    flex: 1;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 15px;
-    text-align: center;
-    cursor: pointer; /* Make the card clickable */
-    transition: background-color 0.3s, border-color 0.3s;
-  }
-  
-  .wallet-card:hover {
-    background-color: #f9f9f9;
-  }
-  
-  .wallet-card.selected {
-    background-color: #e0e0e0; /* Highlight the selected wallet */
-    border-color: #333;
-  }
-  
-  .wallet-title {
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-  
-  .wallet-balance {
-    color: #666;
-  }
-  
-  .quick-transaction {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
-  }
-  
-  .quick-transaction input {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 1rem;
-  }
-  
-  .quick-transaction button {
-    background-color: #333;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .transaction-buttons {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-  
-  .transaction-buttons button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .transaction-buttons .primary {
-    background-color: #333;
-    color: white;
-  }
-  
-  .transaction-buttons button:not(.primary) {
-    background-color: #f0f0f0;
-    color: #333;
-  }
-  
-  .recent-transactions {
-    max-height: 500px;
-    overflow-y: auto;
-  }
-  
-  .recent-transactions .transaction-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .modal-content {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    position: relative;
-    width: 90%;
-    max-width: 400px;
-    max-height: 80vh;
-    overflow-y: auto;
-  }
-  
-  .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 20px;
-  }
-  
-  .modal-header h3 {
-    font-size: 1.5rem;
-    margin: 0;
-    flex: 1;
-    text-align: center;
-  }
-  
-  .close-button {
-    background-color: #ff4d4f;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    transition: background-color 0.2s ease-in-out;
-  }
-  
-  .close-button:hover {
-    background-color: #d9363e;
-  }
-  
-  .close-button:active {
-    background-color: #b32d2e;
-  }
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  background-color: #d3d3d3;
+  padding: 50px;
+  text-align: center;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 50px;
+  margin-top: 70px;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.header p {
+  margin: 5px 0;
+  font-size: 1rem;
+  color: #333;
+}
+
+.header nav {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.header nav button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+  color: #333;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.header nav button.active {
+  background-color: #333;
+  color: white;
+}
+
+.wallet-section h2,
+.transaction-section h2,
+.recent-transactions h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.wallet-container {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.wallet-card {
+  flex: 1;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 15px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.wallet-card:hover {
+  background-color: #f9f9f9;
+}
+
+.wallet-card.selected {
+  background-color: #e0e0e0;
+  border-color: #333;
+}
+
+.wallet-title {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.wallet-balance {
+  color: #666;
+}
+
+.quick-transaction {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.quick-transaction input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.quick-transaction button {
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.transaction-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.transaction-buttons button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.transaction-buttons .primary {
+  background-color: #333;
+  color: white;
+}
+
+.transaction-buttons button:not(.primary) {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.recent-transactions {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.recent-transactions .transaction-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  position: relative;
+  width: 90%;
+  max-width: 400px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.modal-header h3 {
+  font-size: 1.5rem;
+  margin: 0;
+  flex: 1;
+  text-align: center;
+}
+
+.close-button {
+  background-color: #ff4d4f;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.close-button:hover {
+  background-color: #d9363e;
+}
+
+.close-button:active {
+  background-color: #b32d2e;
+}
