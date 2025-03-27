@@ -68,9 +68,9 @@ Wallet.initializeSampleData = async () => {
     const count = await Wallet.count();
     if (count === 0) {
       const sampleWallets = [
-        { name: "Ví tiền mặt", balance: 500000.00 },
-        { name: "Ngân hàng", balance: 2000000.00 },
-        { name: "Ví điện tử", balance: 150000.00 },
+        { name: "Ví tiền mặt", balance: 0.0 },
+        { name: "Ngân hàng", balance: 0.0 },
+        { name: "Ví điện tử", balance: 0.0 },
       ];
 
       await Wallet.bulkCreate(sampleWallets);

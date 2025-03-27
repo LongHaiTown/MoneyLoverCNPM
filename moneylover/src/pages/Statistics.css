@@ -56,13 +56,64 @@
   
   .chart-section {
     margin: 40px 0;
+    margin-top: 40px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+
+    display: flex;
+    flex-direction: row;
+
   }
   
   .chart-section h2 {
     font-size: 1.5rem;
     margin-bottom: 20px;
   }
+  .chart{
+    width: 80%;
+    height: 100%;
+    margin: 40px 0;
+    margin-top: 40px;
+    margin-right: 10px;
+  }
+  .chart-buttons {
+    width: 20%;
+    margin: 40px 0;
+    margin-top: 40px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column; /* Xếp các nút theo cột */
+    gap: 10px; /* Khoảng cách giữa các nút */
+  }
   
+  .chart-buttons button {
+    padding: 10px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .chart-buttons button:hover {
+    background-color: #ddd;
+  }
+  .pie-charts-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  
+  .pie-chart {
+    width: 50%;
+    text-align: center;
+  }
+  
+  .pie-chart h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
   .ai-analysis {
     margin-top: 40px;
     padding: 20px;
