@@ -47,7 +47,7 @@ function Navbar() {
       </div>
 
       {/* Navbar Links */}
-      <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: "10px",  marginRight: "40px" }}>
         <button onClick={() => handleScroll("transactions")} style={{ padding: "5px 10px", textDecoration: "none", color: "#333" }}>
           Giao dịch
         </button>

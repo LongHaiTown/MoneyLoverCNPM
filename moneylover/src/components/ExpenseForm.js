@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { getWallets, getCategories } from "../services/api";
-import "./ExpenseForm.css"; // Add a new CSS file for ExpenseForm
+import "./ExpenseForm.css";
 
 const ExpenseForm = ({ onSubmit, expense }) => {
   const [formData, setFormData] = useState(
@@ -15,7 +15,14 @@ const ExpenseForm = ({ onSubmit, expense }) => {
   }, []);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    // Định dạng lại giá trị date nếu cần
+    if (name === "date") {
+      // Đảm bảo giá trị date được định dạng đúng cho datetime-local
+      setFormData({ ...formData, [name]: value });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   return (
@@ -45,7 +52,7 @@ const ExpenseForm = ({ onSubmit, expense }) => {
       <input
         className="form-input"
         name="date"
-        type="date"
+        type="datetime-local" // Thay đổi từ type="date" thành type="datetime-local"
         value={formData.date}
         onChange={handleChange}
         required
