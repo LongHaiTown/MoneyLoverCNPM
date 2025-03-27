@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getExpenses, deleteExpense, createExpense } from "../services/api";
-import ExpenseForm from "../components/ExpenseForm";
+import { FaArrowUp, FaArrowDown } from "react-icons/fa"; // Thêm icon từ react-icons
 import "./ExpenseList.css";
 
 const ExpenseList = ({ onUpdate }) => {
@@ -48,21 +48,47 @@ const ExpenseList = ({ onUpdate }) => {
 
   // Group expenses by date
   const groupedExpenses = expenses.reduce((acc, expense) => {
-    const date = expense.date;
-    if (!acc[date]) {
-      acc[date] = {
+    const dateObj = new Date(expense.date);
+    const date = dateObj.toLocaleDateString("vi-VN", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    }); // Định dạng ngày thành DD/MM/YYYY
+    const time = dateObj.toLocaleTimeString("vi-VN", {
+      hour: "2-digit",
+      minute: "2-digit",
+    }); // Định dạng thời gian thành HH:mm
+
+    const dateKey = date; // Nhóm theo ngày (không bao gồm thời gian)
+    if (!acc[dateKey]) {
+      acc[dateKey] = {
         date,
-        totalBalance: 0,
+        originalDate: expense.date, // Lưu ngày gốc để tính ngày trong tuần
+        totalIncome: 0,
+        totalExpense: 0,
         items: [],
       };
     }
 
-    acc[date].totalBalance += expense.amount;
-    acc[date].items.push({
+    const type = expense.category?.type || "expense";
+    const amount = expense.amount;
+
+    if (type === "income") {
+      acc[dateKey].totalIncome += amount;
+    } else {
+      acc[dateKey].totalExpense += amount;
+    }
+
+    acc[dateKey].items.push({
       id: expense.id,
       title: expense.title,
-      description: `Category: ${expense.category?.name || expense.category_id}`,
+      description: `Danh mục: ${expense.category?.name || expense.category_id}, Ví: ${
+        expense.wallet?.name || expense.wallet_id
+      }`,
       amount: expense.amount,
+      type: type,
+      categoryName: expense.category?.name || "Không xác định",
+      time: time, // Lưu thời gian của giao dịch
     });
 
     return acc;
@@ -70,13 +96,27 @@ const ExpenseList = ({ onUpdate }) => {
 
   // Convert grouped expenses to an array and sort by date (descending)
   const groupedExpensesArray = Object.values(groupedExpenses).sort(
-    (a, b) => new Date(b.date) - new Date(a.date)
+    (a, b) => new Date(b.originalDate) - new Date(a.originalDate)
   );
 
   const getDayOfWeek = (dateString) => {
     const daysOfWeek = ["Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy"];
     const date = new Date(dateString);
     return daysOfWeek[date.getDay()];
+  };
+
+  const getIconForExpense = (type, categoryName) => {
+    if (type === "income") {
+      return <FaArrowUp className="expense-icon income-icon" />;
+    }
+    switch (categoryName.toLowerCase()) {
+      case "ăn uống":
+        return <FaArrowDown className="expense-icon expense-icon" />;
+      case "mua sắm":
+        return <FaArrowDown className="expense-icon expense-icon" />;
+      default:
+        return <FaArrowDown className="expense-icon expense-icon" />;
+    }
   };
 
   return (
@@ -90,45 +130,61 @@ const ExpenseList = ({ onUpdate }) => {
       </div>
 
       {groupedExpensesArray.length === 0 ? (
-        <p>Chưa có giao dịch nào.</p>
+        <p className="no-expenses">Chưa có giao dịch nào.</p>
       ) : (
         <div className="expense-list">
           {groupedExpensesArray.map((group, index) => (
             <div key={index} className="expense-group">
               <div className="expense-group-header">
                 <h3 className="expense-date">
-                  {getDayOfWeek(group.date)}, ngày {group.date}
+                  {group.date} ({getDayOfWeek(group.originalDate)})
                 </h3>
-                <p
-                  className="expense-total"
-                  style={{ color: group.totalBalance >= 0 ? "blue" : "red" }}
-                >
-                  {group.totalBalance >= 0 ? "+" : ""}
-                  {group.totalBalance.toLocaleString()} VND
-                </p>
-              </div>
-              {group.items.map((item) => (
-                <div key={item.id} className="expense-item">
-                  <div className="expense-avatar">
-                    {/* Placeholder for avatar */}
-                    <div className="avatar-placeholder"></div>
-                  </div>
-                  <div className="expense-details">
-                    <p className="expense-title">{item.title}</p>
-                    <p className="expense-description">{item.description}</p>
-                  </div>
-                  <div className="expense-actions">
-                    <p
-                      className="expense-amount"
-                      style={{ color: item.amount >= 0 ? "blue" : "red" }}
+                <div className="expense-total">
+                  <p>
+                    Thu nhập: <span className="income">+{group.totalIncome.toLocaleString()} VND</span>
+                  </p>
+                  <p>
+                    Chi tiêu: <span className="expense">-{group.totalExpense.toLocaleString()} VND</span>
+                  </p>
+                  <p>
+                    Tổng:{" "}
+                    <span
+                      className={group.totalIncome - group.totalExpense >= 0 ? "income" : "expense"}
                     >
-                      {item.amount >= 0 ? "+" : ""}
-                      {Math.abs(item.amount).toLocaleString()} VND
-                    </p>
-                    <button onClick={() => handleDelete(item.id)}>Xóa</button>
-                  </div>
+                      {group.totalIncome - group.totalExpense >= 0 ? "+" : "-"}
+                      {Math.abs(group.totalIncome - group.totalExpense).toLocaleString()} VND
+                    </span>
+                  </p>
                 </div>
-              ))}
+              </div>
+              <div className="expense-items">
+                {group.items.map((item) => (
+                  <div key={item.id} className="expense-item">
+                    <div className="expense-icon-wrapper">
+                      {getIconForExpense(item.type, item.categoryName)}
+                    </div>
+                    <div className="expense-details">
+                      <div className="expense-header">
+                        <p className="expense-title">{item.title}</p>
+                        <p className="expense-time">{item.time}</p>
+                      </div>
+                      <p className="expense-description">{item.description}</p>
+                    </div>
+                    <div className="expense-actions">
+                      <p
+                        className="expense-amount"
+                        style={{ color: item.type === "income" ? "#1a73e8" : "#d32f2f" }}
+                      >
+                        {item.type === "income" ? "+" : "-"}
+                        {Math.abs(item.amount).toLocaleString()} VND
+                      </p>
+                      <button className="delete-button" onClick={() => handleDelete(item.id)}>
+                        Xóa
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           ))}
         </div>
