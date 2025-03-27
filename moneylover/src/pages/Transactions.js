@@ -11,6 +11,8 @@ const Transactions = () => {
   const [showForm, setShowForm] = useState(false);
   const [showExpenseList, setShowExpenseList] = useState(false);
   const [quickTransaction, setQuickTransaction] = useState("");
+  const [selectedWallet, setSelectedWallet] = useState(null); // Trạng thái để lưu wallet được chọn
+  const [showWalletTransactions, setShowWalletTransactions] = useState(false);
 
   const fetchWallets = async () => {
     try {
@@ -74,16 +76,22 @@ const Transactions = () => {
       .catch((err) => console.error("❌ Lỗi khi tạo giao dịch:", err));
   };
 
+  // Hàm xử lý khi nhấn vào wallet
+  const handleWalletClick = (wallet) => {
+    setSelectedWallet(wallet);
+    setShowWalletTransactions(true);
+  };
+
+  // Lọc các giao dịch theo wallet được chọn
+  const walletTransactions = selectedWallet
+    ? expenses.filter((expense) => expense.wallet_id === selectedWallet.id)
+    : [];
+
   return (
     <div className="transactions-container" id="transactions">
       <header className="header">
         <h1>Money lover fake</h1>
         <p>Fake nhưng thu chi là chuẩn</p>
-        <nav>
-          <button className="active">Giao dịch</button>
-          <button>Ngân sách</button>
-          <button>Thống kê</button>
-        </nav>
       </header>
 
       <section className="wallet-section">
@@ -91,9 +99,15 @@ const Transactions = () => {
         <div className="wallet-container">
           {wallets.length > 0 ? (
             wallets.map((wallet) => {
-              const displayBalance = isNaN(wallet.balance) ? 0 : parseFloat(wallet.balance);
+              const displayBalance = isNaN(wallet.balance)
+                ? 0
+                : parseFloat(wallet.balance);
               return (
-                <div key={wallet.id} className="wallet-card">
+                <div
+                  key={wallet.id}
+                  className="wallet-card"
+                  onClick={() => handleWalletClick(wallet)} // Thêm sự kiện click
+                >
                   <p className="wallet-title">{wallet.name}</p>
                   <p className="wallet-balance">
                     Hiện có <br />
@@ -103,6 +117,7 @@ const Transactions = () => {
                       }}
                     >
                       {displayBalance >= 0 ? "+" : ""}
+                      {displayBalance < 0 ? "-" : ""}
                       {Math.abs(displayBalance).toLocaleString()} VND
                     </span>
                   </p>
@@ -163,6 +178,58 @@ const Transactions = () => {
                 <h3>Tất cả giao dịch</h3>
               </div>
               <ExpenseList onUpdate={fetchExpenses} expenses={expenses} />
+            </div>
+          </div>
+        )}
+        {showWalletTransactions && selectedWallet && (
+          <div className="modal">
+            <div className="modal-content">
+              <div className="modal-header">
+                <button
+                  className="close-button"
+                  onClick={() => setShowWalletTransactions(false)}
+                >
+                  Đóng
+                </button>
+                <h3>Giao dịch của {selectedWallet.name}</h3>
+              </div>
+              <div className="wallet-transaction-list">
+                {walletTransactions.length > 0 ? (
+                  walletTransactions.map((expense) => (
+                    <div key={expense.id} className="transaction-item">
+                      <div className="transaction-details">
+                        <p className="transaction-title">{expense.title}</p>
+                        <p className="transaction-date">
+                          {new Date(expense.date).toLocaleDateString("vi-VN", {
+                            weekday: "long",
+                            day: "numeric",
+                            month: "numeric",
+                            year: "numeric",
+                          })}
+                        </p>
+                        <p className="transaction-category">
+                          {expense.category?.name || "Không có danh mục"}
+                        </p>
+                      </div>
+                      <div className="transaction-amount">
+                        <span
+                          style={{
+                            color:
+                              expense.category?.type === "income"
+                                ? "blue"
+                                : "red",
+                          }}
+                        >
+                          {expense.category?.type === "income" ? "+" : "-"}
+                          {expense.amount.toLocaleString()} VND
+                        </span>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <p>Chưa có giao dịch nào cho ví này.</p>
+                )}
+              </div>
             </div>
           </div>
         )}
