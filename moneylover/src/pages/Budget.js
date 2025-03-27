@@ -36,7 +36,7 @@ const Budget = () => {
   return (
     <div className="budget-container" id="budgets">
       <h2 className="budget-header">Ngân sách</h2>
-      <div>
+      <div className="select-time">
         <label>
           Month:
           <input
