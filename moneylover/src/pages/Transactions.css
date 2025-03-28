@@ -55,6 +55,8 @@
 .recent-transactions h2 {
   font-size: 1.5rem;
   margin-bottom: 10px;
+  display: flex;
+  justify-self: center;
 }
 
 .wallet-container {
@@ -72,10 +74,15 @@
   text-align: center;
   cursor: pointer;
   transition: background-color 0.3s, border-color 0.3s;
+    --color: #ffa260;
+    --hover: #9A36FF;
 }
 
-.wallet-card:hover {
-  background-color: #f9f9f9;
+
+.wallet-card:hover,
+.wallet-card:focus {
+  box-shadow: 0 0.8em 0.5em -0.4em var(--hover);
+  transform: translateY(-0.25em);
 }
 
 .wallet-card.selected {
@@ -149,6 +156,18 @@
   gap: 10px;
 }
 
+.transaction-item
+{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+}
+
 .modal {
   position: fixed;
   top: 0;
@@ -162,7 +181,7 @@
 }
 
 .modal-content {
-  background: white;
+  background: #9A36FF;
   padding: 20px;
   border-radius: 10px;
   position: relative;
@@ -181,9 +200,10 @@
 
 .modal-header h3 {
   font-size: 1.5rem;
-  margin: 0;
+  margin: auto;
   flex: 1;
   text-align: center;
+  color: #fff;
 }
 
 .close-button {
@@ -195,6 +215,7 @@
   cursor: pointer;
   font-size: 0.9rem;
   transition: background-color 0.2s ease-in-out;
+  display: contents;
 }
 
 .close-button:hover {
@@ -204,3 +225,7 @@
 .close-button:active {
   background-color: #b32d2e;
 }
+
+/* select{
+  color: #fff;
+} */

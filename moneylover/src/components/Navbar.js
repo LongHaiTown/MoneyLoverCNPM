@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { BrowserRouter as Link } from "react-router-dom";
+import "./Navbar.css";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,22 +13,7 @@ function Navbar() {
   };
 
   return (
-    <nav
-      style={{
-        display: "flex",
-        width: "100%",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: "10px 20px",
-        background: "#fff",
-        borderBottom: "1px solid #ddd",
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 1000,
-      }}
-    >
+    <nav className="Nav">
       {/* Logo + Menu Toggle */}
       <div style={{ display: "flex", alignItems: "center" }}>
         <div style={{ fontSize: "24px", fontWeight: "bold", marginRight: "20px" }}>
@@ -48,13 +34,13 @@ function Navbar() {
 
       {/* Navbar Links */}
       <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-        <button onClick={() => handleScroll("transactions")} style={{ padding: "5px 10px", textDecoration: "none", color: "#333" }}>
+        <button className="Nav-Button-routing" onClick={() => handleScroll("transactions")}>
           Giao dịch
         </button>
-        <button onClick={() => handleScroll("budgets")} style={{ padding: "5px 10px", textDecoration: "none", color: "#333" }} >
+        <button className="Nav-Button-routing" onClick={() => handleScroll("budgets")} >
           Ngân sách
         </button>
-        <button onClick={() => handleScroll("statistics")} style={{ padding: "5px 10px", textDecoration: "none", color: "#333" }} >
+        <button className="Nav-Button-routing" onClick={() => handleScroll("statistics")}>
           Thống kê
         </button>
 
