@@ -320,13 +320,13 @@ const Statistics = () => {
       <div className="tabs">
         <button
           onClick={() => setActiveTab('time')}
-          style={{ backgroundColor: activeTab === 'time' ? '#ddd' : '#f0f0f0' }}
+          style={{ backgroundColor: activeTab === 'time' ? '#2a9d8f' : '#f0f0f0' }}
         >
           Thống kê theo thời gian
         </button>
         <button
           onClick={() => setActiveTab('category')}
-          style={{ backgroundColor: activeTab === 'category' ? '#ddd' : '#f0f0f0' }}
+          style={{ backgroundColor: activeTab === 'category' ? '#2a9d8f' : '#f0f0f0' }}
         >
           Thống kê theo danh mục
         </button>

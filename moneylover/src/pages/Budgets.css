@@ -4,9 +4,15 @@
   padding: 20px;
 }
 
+
 .budget-header {
-  font-size: 2rem;
-  margin-bottom: 20px;
+  font-size: 1.8rem;      /* Giảm nhẹ size nếu 2rem hơi lớn */
+  font-weight: 600;       /* Tăng độ đậm */
+  color: var(--text-dark, #333); /* Dùng biến màu text đậm */
+  margin-bottom: 30px;    /* Tăng khoảng cách dưới một chút */
+  padding-bottom: 15px;   /* Thêm padding dưới */
+  border-bottom: 1px solid var(--group-border-color, #eee); /* Thêm đường kẻ dưới nhẹ nhàng */
+  text-align: center;     /* Giữ căn giữa */
 }
 
 .budget-tabs {

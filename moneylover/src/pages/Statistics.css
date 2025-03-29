@@ -28,11 +28,15 @@
     margin: 20px 0;
   }
   
+  button{
+    cursor: pointer;
+    background-color: #2a9d8f;
+  }
   .tabs button {
     padding: 10px 20px;
     margin-right: 10px;
-    border: 1px solid #ccc;
-    background-color: #f0f0f0;
+    border: 1px solid #2a9d8f;
+    background-color: #2a9d8f;
     cursor: pointer;
   }
   

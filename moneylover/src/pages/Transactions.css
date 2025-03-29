@@ -1,231 +1,492 @@
-.transactions-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+/* === TOÀN BỘ FILE CSS ĐÃ ĐƯỢC CẬP NHẬT === */
+
+/* --- Biến màu (Đặt ở đầu file) --- */
+:root {
+  --primary-color: #2a9d8f;       /* Màu xanh teal cho hành động chính */
+  --primary-color-hover: #248277;
+  --secondary-color: #f0f0f0;     /* Màu xám nhạt cho hành động phụ */
+  --secondary-color-hover: #e0e0e0;
+  --secondary-border-color: #ccc;
+  --danger-color: #e76f51;        /* Màu cam/đỏ cho hành động nguy hiểm (Xóa) */
+  --danger-color-hover: #d9363e;  /* Hover tối hơn */
+  --text-light: #ffffff;
+  --text-dark: #333333;
+  --button-border-radius: 6px;    /* Bo góc thống nhất */
+  --hover-effect-color: #9A36FF; /* Màu cho hiệu ứng hover wallet card */
+  --income-color: #2a9d8f; /* Màu thu nhập */
+  --expense-color: #e76f51; /* Màu chi tiêu */
+  --meta-tag-bg: #e9ecef;  /* Nền cho tag Category/Wallet */
+  --meta-tag-text: #495057; /* Màu chữ cho tag */
+  --group-header-bg: #f8f9fa; /* Nền header nhóm ngày */
+  --group-border-color: #eee; /* Màu viền nhóm ngày */
+  --item-border-color: #f0f0f0;
 }
 
+/* --- Style cơ bản cho tất cả button (Reset & Thống nhất) --- */
+button {
+ cursor: pointer;
+ font-family: inherit; /* Kế thừa font từ body */
+ border: none; /* Bỏ viền mặc định */
+ padding: 8px 16px; /* Padding chuẩn */
+ border-radius: var(--button-border-radius);
+ font-size: 0.95rem;
+ line-height: 1.4;
+ text-align: center;
+ transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease, border-color 0.2s ease, color 0.2s ease; /* Thêm các transition cần thiết */
+}
+/* Hiệu ứng nhấn nhẹ */
+button:active {
+ transform: translateY(1px);
+ box-shadow: none; /* Bỏ shadow khi nhấn */
+}
+
+
+/* --- Layout chính --- */
+.transactions-container {
+ max-width: 1200px;
+ margin: 0 auto;
+ padding: 20px;
+}
+
+/* --- Header chính --- */
 .header {
-  background-color: #d3d3d3;
-  padding: 50px;
-  text-align: center;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 50px;
-  margin-top: 70px;
+ background-color: #d3d3d3; /* Giữ màu nền cũ */
+ padding: 50px;
+ text-align: center;
+ border-radius: 10px;
+ margin-bottom: 20px;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ padding-top: 50px;
+ margin-top: 70px;
 }
 
 .header h1 {
-  margin: 0;
-  font-size: 2rem;
-  font-weight: bold;
+ margin: 0;
+ font-size: 2rem;
+ font-weight: bold;
 }
 
 .header p {
-  margin: 5px 0;
-  font-size: 1rem;
-  color: #333;
+ margin: 5px 0;
+ font-size: 1rem;
+ color: #333;
 }
 
 .header nav {
-  margin-top: 10px;
-  display: flex;
-  gap: 10px;
+ margin-top: 10px;
+ display: flex;
+ gap: 10px;
 }
 
+/* --- Buttons trong Header Navigation --- */
 .header nav button {
-  padding: 8px 16px;
-  border: none;
-  border-radius: 5px;
-  background-color: #f0f0f0;
-  color: #333;
-  cursor: pointer;
-  font-size: 1rem;
+ padding: 8px 12px; /* Padding nhỏ hơn */
+ background-color: var(--secondary-color);
+ color: var(--text-dark);
 }
-
+.header nav button:hover {
+ background-color: var(--secondary-color-hover);
+}
+/* Nút active trong nav */
 .header nav button.active {
-  background-color: #333;
-  color: white;
+ background-color: var(--text-dark); /* Hoặc màu primary */
+ color: var(--text-light);
+ font-weight: 500;
 }
 
+
+/* --- Tiêu đề các Section --- */
 .wallet-section h2,
 .transaction-section h2,
 .recent-transactions h2 {
-  font-size: 1.5rem;
-  margin-bottom: 10px;
-  display: flex;
-  justify-self: center;
+ font-size: 1.5rem;
+ margin-bottom: 10px;
+ display: grid; /* Có thể không cần flex ở đây */
+ justify-self: center; /* Thuộc tính này dùng với Grid container
+ text-align: left; /* Hoặc center tùy ý */
 }
 
+/* --- Phần Wallet --- */
 .wallet-container {
-  display: flex;
-  gap: 20px;
-  margin-bottom: 20px;
+ display: flex; /* Sử dụng flex */
+ flex-wrap: wrap; /* Cho phép xuống dòng trên màn hình nhỏ */
+ gap: 20px;
+ margin-bottom: 20px;
 }
 
 .wallet-card {
-  flex: 1;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 15px;
-  text-align: center;
-  cursor: pointer;
-  transition: background-color 0.3s, border-color 0.3s;
-    --color: #ffa260;
-    --hover: #9A36FF;
+ flex: 1 1 200px; /* Linh hoạt, cơ sở 200px, cho phép co giãn */
+ background-color: #fff;
+ border: 1px solid #ddd;
+ border-radius: 10px;
+ padding: 15px;
+ text-align: center;
+ cursor: pointer;
+ transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s ease, transform 0.3s ease; /* Thêm transition cho hiệu ứng */
+ /* --color: #ffa260; */ /* Biến này chưa được dùng */
+ --hover: var(--hover-effect-color); /* Đổi tên hoặc dùng trực tiếp biến ở :root */
 }
-
 
 .wallet-card:hover,
-.wallet-card:focus {
-  box-shadow: 0 0.8em 0.5em -0.4em var(--hover);
-  transform: translateY(-0.25em);
+.wallet-card:focus { /* Thêm :focus cho accessibility */
+ box-shadow: 0 0.5em 0.5em -0.4em var(--hover); /* Giảm độ đậm của shadow */
+ transform: translateY(-0.2em); /* Giảm độ nâng */
+ border-color: var(--hover); /* Thêm border màu khi hover */
 }
 
-.wallet-card.selected {
-  background-color: #e0e0e0;
-  border-color: #333;
+.wallet-card.selected { /* Style khi wallet được chọn */
+ background-color: #e8eaf6; /* Màu nền nhẹ khi chọn */
+ border-color: var(--hover); /* Border màu đậm */
+ box-shadow: 0 0.3em 0.4em -0.3em var(--hover); /* Shadow nhẹ */
 }
 
 .wallet-title {
-  font-weight: bold;
-  margin-bottom: 5px;
+ font-weight: bold;
+ margin-bottom: 5px;
 }
 
 .wallet-balance {
-  color: #666;
+ color: #666;
 }
 
+/* --- Quick Transaction --- */
 .quick-transaction {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 10px;
+ display: flex;
+ gap: 10px;
+ margin-bottom: 15px; /* Tăng khoảng cách dưới */
 }
 
 .quick-transaction input {
-  flex: 1;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 1rem;
+ flex: 1;
+ padding: 10px;
+ border: 1px solid #ddd;
+ border-radius: 5px; /* Đồng bộ border-radius với button nếu muốn */
+ font-size: 1rem;
 }
 
+/* Button Gửi (Quick Transaction) */
 .quick-transaction button {
-  background-color: #333;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
+ background-color: var(--primary-color);
+ color: var(--text-light);
+ border: none;
+ padding: 10px 18px; /* Điều chỉnh padding nếu cần */
+ border-radius: var(--button-border-radius); /* Dùng biến */
+ font-weight: 500;
+}
+.quick-transaction button:hover {
+ background-color: var(--primary-color-hover);
+ box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
+/* --- Transaction Buttons (Nhập mới, Xem tất cả) --- */
 .transaction-buttons {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
+ display: flex;
+ gap: 10px;
+ margin-bottom: 20px;
 }
 
 .transaction-buttons button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+ padding: 10px 18px; /* Điều chỉnh padding */
+ border-radius: var(--button-border-radius); /* Dùng biến */
+ font-weight: 500;
 }
 
-.transaction-buttons .primary {
-  background-color: #333;
-  color: white;
-}
-
+/* Nút mặc định (Xem tất cả) - Kiểu Secondary */
 .transaction-buttons button:not(.primary) {
-  background-color: #f0f0f0;
+ background-color: var(--secondary-color);
+ color: var(--text-dark);
+ border: 1px solid var(--secondary-border-color);
+}
+.transaction-buttons button:not(.primary):hover {
+ background-color: var(--secondary-color-hover);
+ border-color: #bbb;
+}
+
+/* Nút Primary (Nhập mới) */
+.transaction-buttons button.primary {
+ background-color: var(--primary-color);
+ color: var(--text-light);
+ border: none; /* Không cần border */
+}
+.transaction-buttons button.primary:hover {
+ background-color: var(--primary-color-hover);
+ box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* --- Recent Transactions --- */
+.recent-transactions {
+  max-height: 500px; /* Giữ giới hạn chiều cao */
+  overflow-y: auto;   /* Giữ cuộn */
+  border: 1px solid var(--group-border-color); /* Viền bao quanh */
+  border-radius: 8px; /* Bo góc */
+  padding: 10px;      /* Padding bên trong */
+  background-color: #fdfdff; /* Nền hơi khác trắng để group nổi bật hơn */
+  margin-top: 25px; /* Khoảng cách với phần trên */
+}
+
+/* --- Mỗi Nhóm Ngày (Date Group) --- */
+.date-group {
+  margin-bottom: 15px; /* Khoảng cách giữa các nhóm ngày */
+  background-color: #ffffff; /* Nền trắng cho mỗi group */
+  border-radius: 6px; /* Bo góc nhẹ hơn section cha */
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06); /* Shadow tinh tế */
+  overflow: hidden; /* Đảm bảo shadow và border-radius đẹp */
+}
+.date-group:last-child {
+  margin-bottom: 0; /* Bỏ margin cho nhóm cuối */
+}
+
+/* --- Header của Nhóm Ngày --- */
+.date-group-header {
+  padding: 12px 15px;
+  background-color: var(--group-header-bg);
+  border-bottom: 1px solid var(--group-border-color);
+}
+
+.date-group-header .group-date { /* Định dạng ngày tháng (ví dụ: Thứ năm, 03/04/2025) */
+  margin: 0 0 10px 0;
+  font-size: 0.95rem; /* Cỡ chữ vừa phải */
+  font-weight: 600;  /* Đậm hơn chút */
   color: #333;
 }
 
-.recent-transactions {
-  max-height: 500px;
-  overflow-y: auto;
-}
-
-.recent-transactions .transaction-list {
+/* --- Tóm tắt Thu/Chi/Tổng trong Header --- */
+.daily-summary {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  justify-content: space-between; /* Dàn đều */
+  flex-wrap: wrap; /* Xuống dòng nếu cần */
+  gap: 8px 15px; /* Khoảng cách dọc / ngang */
+  font-size: 0.8rem; /* Cỡ chữ nhỏ */
+  color: #555;
 }
 
-.transaction-item
-{
+.summary-item {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 10px;
-  margin: 10px;
+  align-items: baseline; /* Căn theo baseline */
+  gap: 4px;
 }
 
+.summary-item .label {
+  color: #777; /* Màu label nhạt hơn */
+}
+
+.summary-item .value {
+  font-weight: 600; /* Giá trị đậm */
+}
+.summary-item.income .value {
+  color: var(--income-color);
+}
+.summary-item.expense .value,
+.summary-item.total .value[style*="var(--expense-color"] /* Áp dụng cho tổng âm */ {
+  color: var(--expense-color);
+}
+/* Màu cho tổng dương */
+.summary-item.total .value[style*="var(--income-color"] {
+     color: var(--income-color);
+}
+
+
+/* --- Container chứa các item trong ngày --- */
+.items-in-group {
+  padding: 0; /* Thường không cần padding ở đây */
+}
+
+
+/* --- Style cho từng Transaction Item --- */
+/* Sử dụng lại class .transaction-item đã có và tinh chỉnh */
+.transaction-item {
+  display: flex;
+  align-items: center; /* Căn giữa theo chiều dọc */
+  padding: 12px 15px; /* Padding đồng bộ với header group */
+  border-bottom: 1px solid var(--item-border-color); /* Đường kẻ giữa các item */
+  background-color: #fff; /* Đảm bảo nền trắng */
+  margin: 0; /* Reset margin */
+  justify-content: space-between; /* Giữ lại để đẩy các phần tử ra xa */
+}
+/* Item cuối cùng trong mỗi nhóm không có đường kẻ dưới */
+.items-in-group .transaction-item:last-child {
+  border-bottom: none;
+}
+
+/* (Tùy chọn) Avatar/Icon */
+.transaction-item .expense-avatar {
+  margin-right: 12px;
+  flex-shrink: 0; /* Không bị co lại */
+}
+.transaction-item .avatar-placeholder {
+    width: 36px;
+    height: 36px;
+    background-color: #e9ecef; /* Màu nền giống tag */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1em;
+    color: #adb5bd; /* Màu icon/chữ cái nhạt */
+}
+
+/* Phần chi tiết (Tiêu đề, Category, Wallet) */
+.transaction-item .expense-details {
+  flex-grow: 1; /* Chiếm không gian còn lại */
+  margin-right: 10px; /* Khoảng cách trước số tiền */
+}
+.transaction-item .expense-title {
+  margin: 0 0 5px 0;
+  font-weight: 500; /* Đậm vừa phải */
+  color: #333;
+  line-height: 1.3; /* Tăng khoảng cách dòng nếu title dài */
+}
+
+/* Phần Meta Tags (Category, Wallet) */
+.expense-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px; /* Khoảng cách giữa các tag */
+  margin-top: 4px;
+}
+.meta-tag {
+  background-color: var(--meta-tag-bg);
+  color: var(--meta-tag-text);
+  font-size: 0.75rem; /* Cỡ chữ siêu nhỏ */
+  padding: 3px 7px; /* Padding cho tag */
+  border-radius: 4px; /* Bo góc tag */
+  white-space: nowrap;
+  line-height: 1.2; /* Đảm bảo chiều cao tag nhất quán */
+}
+
+/* Phần Số tiền */
+.transaction-item .expense-amount-container {
+  text-align: right;
+  flex-shrink: 0; /* Không bị co lại */
+  min-width: 110px; /* Đảm bảo đủ rộng cho số tiền */
+}
+.transaction-item .expense-amount {
+  font-weight: 500;
+  margin: 0; /* Reset margin của p */
+  font-size: 0.9rem; /* Có thể điều chỉnh cỡ chữ số tiền */
+}
+/* --- Modal --- */
 .modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+ position: fixed;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height: 100%;
+ background: rgba(0, 0, 0, 0.6); /* Tăng độ mờ nền */
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ z-index: 1000; /* Đảm bảo nổi lên trên */
+ padding: 20px; /* Padding để không chạm màn hình nhỏ */
+ box-sizing: border-box;
 }
 
 .modal-content {
-  background: #9A36FF;
-  padding: 20px;
-  border-radius: 10px;
-  position: relative;
-  width: 90%;
-  max-width: 400px;
-  max-height: 80vh;
-  overflow-y: auto;
+ background-color: #FFFFFF;
+ border-radius: 10px; /* Giữ bo góc */
+ box-shadow: 0 5px 20px rgba(0,0,0,0.2); /* Tăng shadow */
+ width: 100%; /* Chiếm hết padding của modal */
+ max-width: 550px; /* Điều chỉnh max-width nếu cần */
+ /* margin-top: 60px; */ /* Bỏ margin-top, align-items: center của modal sẽ căn giữa */
+ overflow: hidden; /* Quan trọng */
+ display: flex; /* Bật flex */
+ flex-direction: column; /* Xếp dọc header-body-footer */
+ max-height: 90vh; /* Giới hạn chiều cao */
 }
 
+/* Header của Modal */
 .modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 20px;
+ padding: 15px 20px; /* Đồng bộ padding */
+ border-bottom: 1px solid #e0e0e0; /* Giữ border */
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ background-color: #f8f9fa; /* Nền nhẹ */
+ flex-shrink: 0; /* Không co lại */
 }
-
+/* Cấu trúc JSX mới được ưu tiên: */
+.modal-header-title h3,
+/* Hoặc cấu trúc cũ: */
 .modal-header h3 {
-  font-size: 1.5rem;
-  margin: auto;
-  flex: 1;
-  text-align: center;
-  color: #fff;
+ font-size: 1.15rem; /* Điều chỉnh cỡ chữ */
+ font-weight: 600;
+ color: #333; /* Giữ màu cũ */
+ margin: 0;
 }
 
-.close-button {
-  background-color: #ff4d4f;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: background-color 0.2s ease-in-out;
-  display: contents;
+/* Nút Đóng (Close Button) trong Modal Header */
+/* Sử dụng cấu trúc JSX mới nếu có: .modal-header-close .close-button */
+/* Hoặc dùng selector cũ nếu giữ nguyên JSX: .modal-header .close-button */
+.modal-header .close-button {
+ background: none; /* Không nền */
+ border: none; /* Không viền */
+ color: #6c757d; /* Màu icon xám */
+ padding: 0; /* Reset padding */
+ font-size: 1.8rem; /* Kích thước cho icon X */
+ line-height: 1; /* Căn giữa icon */
+ width: 32px; /* Kích thước cố định để tạo hình tròn */
+ height: 32px;
+ border-radius: 50%; /* Bo tròn */
+ display: flex; /* Để căn giữa icon bên trong */
+ align-items: center;
+ justify-content: center;
+ transition: background-color 0.2s ease, color 0.2s ease; /* Thêm transition */
+}
+.modal-header .close-button:hover {
+ background-color: #f0f0f0; /* Nền xám nhạt khi hover */
+ color: #343a40; /* Màu icon đậm hơn */
 }
 
-.close-button:hover {
-  background-color: #d9363e;
+/* Body của Modal */
+.modal-body {
+   padding: 20px;
+   overflow-y: auto; /* Cuộn khi cần */
+   flex-grow: 1; /* Chiếm không gian */
 }
 
-.close-button:active {
-  background-color: #b32d2e;
+
+/* --- Nút Submit trong Modal Content (Thường là trong Form) --- */
+/* Dùng class cụ thể nếu form có class, ví dụ: .expense-form button[type="submit"] */
+/* Hoặc nhắm mục tiêu chung hơn: */
+.modal-content form button[type="submit"] {
+ background-color: var(--primary-color);
+ color: var(--text-light);
+ border: none;
+ padding: 10px 20px;
+ font-weight: 500;
+ border-radius: var(--button-border-radius);
+ width: auto; /* Bỏ width cố định */
+ display: block; /* Để dùng margin auto căn giữa */
+ margin: 20px auto 10px; /* Khoảng cách trên/dưới và căn giữa */
+ min-width: 130px; /* Chiều rộng tối thiểu */
+}
+.modal-content form button[type="submit"]:hover {
+  background-color: var(--primary-color-hover);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
 }
 
-/* select{
-  color: #fff;
-} */
+
+/* --- (Tùy chọn) Nút Sửa/Xóa trong danh sách item --- */
+.expense-action-buttons button {
+ padding: 5px 10px; /* Nhỏ hơn cho nút trong danh sách */
+ font-size: 0.85rem;
+ color: var(--text-light);
+ border-radius: 4px;
+}
+.expense-action-buttons .btn-edit {
+  background-color: #6c757d; /* Màu xám trung tính */
+}
+.expense-action-buttons .btn-edit:hover {
+  background-color: #5a6268;
+}
+.expense-action-buttons .btn-delete {
+  background-color: var(--danger-color); /* Màu nguy hiểm */
+}
+.expense-action-buttons .btn-delete:hover {
+  background-color: var(--danger-color-hover);
+}
+
+
+/* === KẾT THÚC FILE CSS === */

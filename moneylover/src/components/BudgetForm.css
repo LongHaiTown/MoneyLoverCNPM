@@ -1,0 +1,93 @@
+/* === CSS CHO BUDGET FORM === */
+
+/* --- Container Form --- */
+/* Nếu form nằm trực tiếp trong .modal-body, phần padding/margin có thể không cần */
+.budget-form {
+    display: flex;
+    flex-direction: column; /* Xếp các thành phần theo chiều dọc */
+    gap: 15px; /* Khoảng cách nhất quán giữa các thành phần */
+    padding: 10px 0; /* Thêm chút padding trên/dưới nếu cần */
+  }
+  
+  /* --- Tiêu đề Form --- */
+  .budget-form h3 {
+    font-size: 1.3rem;  /* Cỡ chữ tiêu đề form */
+    font-weight: 600;
+    color: var(--text-dark, #333); /* Dùng biến màu nếu có */
+    margin: 0 0 5px 0;  /* Khoảng cách dưới nhỏ */
+    text-align: left;   /* Căn trái tiêu đề */
+  }
+  
+  /* --- Style chung cho Select và Input --- */
+  .budget-form select,
+  .budget-form input[type="number"],
+  .budget-form input[type="date"] {
+    width: 100%; /* Chiếm toàn bộ chiều rộng */
+    padding: 10px 12px; /* Padding bên trong */
+    border: 1px solid var(--secondary-border-color, #ccc); /* Viền giống các input khác */
+    border-radius: var(--button-border-radius, 6px); /* Bo góc đồng bộ */
+    font-size: 0.95rem; /* Cỡ chữ nội dung input */
+    box-sizing: border-box; /* QUAN TRỌNG: padding không làm tăng kích thước */
+    background-color: #fff; /* Nền trắng */
+    transition: border-color 0.2s ease, box-shadow 0.2s ease; /* Hiệu ứng focus */
+  }
+  
+  /* --- Style riêng cho Select (nếu muốn bỏ giao diện mặc định) --- */
+  .budget-form select {
+      appearance: none; /* Bỏ giao diện mặc định của OS */
+     -webkit-appearance: none;
+     -moz-appearance: none;
+     background-image: url("data:image/svg+xml,..."); /* Thêm mũi tên tùy chỉnh */
+     background-repeat: no-repeat;
+     background-position: right 10px center;
+     background-size: 1em; 
+     cursor: pointer;
+  }
+  /* Option trống */
+  .budget-form select option[value=""] {
+      color: #aaa;
+  }
+  
+  
+  /* --- Style khi Input/Select được focus --- */
+  .budget-form select:focus,
+  .budget-form input[type="number"]:focus,
+  .budget-form input[type="date"]:focus {
+    outline: none; /* Bỏ viền focus mặc định */
+    border-color: var(--primary-color, #2a9d8f); /* Đổi màu viền khi focus */
+    box-shadow: 0 0 0 3px rgba(42, 157, 143, 0.15); /* Thêm hiệu ứng bóng mờ (điều chỉnh màu RGBA) */
+  }
+  
+  /* --- Style cho Placeholder (nếu input có placeholder) --- */
+  .budget-form input::placeholder {
+    color: #6a1818;
+    opacity: 1; /* Đảm bảo hiển thị trên một số trình duyệt */
+  }
+  
+  /* --- Nút Submit --- */
+  .budget-form button[type="submit"] {
+    background-color: var(--primary-color, #2a9d8f); /* Màu nền chính */
+    color: var(--text-light, #fff); /* Màu chữ trắng */
+    border: none;
+    padding: 12px 20px; /* Padding lớn hơn cho nút chính */
+    font-weight: 500;
+    border-radius: var(--button-border-radius, 6px); /* Bo góc đồng bộ */
+    width: 100%; /* Nút chiếm hết chiều rộng */
+    margin-top: 10px; /* Khoảng cách với trường input cuối */
+    cursor: pointer;
+    font-size: 1rem; /* Cỡ chữ nút */
+    transition: background-color 0.2s ease, box-shadow 0.2s ease; /* Thêm hiệu ứng */
+  }
+  
+  .budget-form button[type="submit"]:hover {
+     background-color: var(--primary-color-hover, #248277); /* Màu nền đậm hơn khi hover */
+     box-shadow: 0 2px 5px rgba(0,0,0,0.15); /* Thêm bóng đổ nhẹ */
+  }
+  
+  .budget-form button[type="submit"]:active {
+      transform: translateY(1px); /* Hiệu ứng nhấn */
+      box-shadow: none;
+  }
+  
+  
+  /* === KẾT THÚC CSS CHO BUDGET FORM === */

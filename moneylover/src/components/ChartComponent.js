@@ -1,7 +1,7 @@
 import React from "react";
 import { Bar, Doughnut, Line } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement, PointElement, LineElement } from "chart.js";
-
+import "../components/ChartComponents.css";
 // Đăng ký các thành phần của Chart.js
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement, PointElement, LineElement);
 
@@ -55,13 +55,13 @@ const ChartComponent = () => {
 
   return (
     <div>
-      <h2>Biểu đồ cột</h2>
+      <h2 className="cot">Biểu đồ cột</h2>
       <Bar data={barData} />
       
       <h2>Biểu đồ tròn</h2>
       <Doughnut data={doughnutData} />
       
-      <h2>Biểu đồ đường</h2>
+      <h2 className="duong">Biểu đồ đường</h2>
       <Line data={lineData} />
     </div>
   );

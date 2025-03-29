@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { getCategories, createBudget } from "../services/api";
-
+import "./BudgetForm.css";
 const BudgetForm = ({ onSubmit }) => {
   const [formData, setFormData] = useState({
     category_id: "",
@@ -29,7 +29,7 @@ const BudgetForm = ({ onSubmit }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="budget-form" onSubmit={handleSubmit}>
       <h3>Create Budget</h3>
       <select
         name="category_id"
