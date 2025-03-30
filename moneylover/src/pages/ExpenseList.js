@@ -96,9 +96,15 @@ const ExpenseList = ({ onUpdate }) => {
           {groupedExpensesArray.map((group, index) => (
             <div key={index} className="expense-group">
               <div className="expense-group-header">
-                <h3 className="expense-date">
-                  {getDayOfWeek(group.date)}, ngày {group.date}
-                </h3>
+              <h3 className="transaction-date">
+              {new Date(group.date).toLocaleDateString("vi-VN", {
+                weekday: "long",
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+              })}
+            </h3>
+
                 <p
                   className="expense-total"
                   style={{ color: group.totalBalance >= 0 ? "blue" : "red" }}

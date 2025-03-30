@@ -309,7 +309,7 @@ const Statistics = () => {
   const availableMonths = Array.from(new Set(expenses.map(exp => new Date(exp.date).toLocaleString('default', { month: 'short' }))));
 
   return (
-    <div className="statistics-container">
+    <div className="statistics-container" id ="statistics">
       {/* Header */}
       <div className="header">
         <h1>Thống kê</h1>

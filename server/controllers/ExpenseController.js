@@ -2,6 +2,50 @@ const Expense = require("../models/ExpenseModel");
 const Wallet = require("../models/WalletModel");
 const sequelize = require("../config/db"); // Import sequelize từ file cấu hình
 
+// import { GoogleGenerativeAI } from "@google/generative-ai";
+// import dotenv from "dotenv";
+
+// dotenv.config();
+// const genAI = new GoogleGenerativeAI(pAIzaSyBTl0pu_mgeRohVHdWAM_RZs6vswD80OAs);
+// const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+
+// export const analyzeExpenses = async (req, res) => {
+//   try {
+//     const { user_id } = req.params;
+
+//     // Lấy dữ liệu chi tiêu từ DB
+//     const expenses = await Expense.findAll({
+//       where: { user_id },
+//       include: [{ model: sequelize.models.Category, attributes: ["name", "type"] }],
+//       order: [["date", "ASC"]],
+//     });
+
+//     if (!expenses || expenses.length === 0) {
+//       return res.status(404).json({ error: "Không có dữ liệu chi tiêu" });
+//     }
+
+//     // Chuẩn bị dữ liệu cho AI
+//     const expenseData = expenses.map((expense) => ({
+//       date: expense.date,
+//       category: expense.Category.name,
+//       amount: expense.amount,
+//       description: expense.description || "",
+//     }));
+
+//     const prompt = `Phân tích chi tiêu và thu nhập của tôi và dự đoán chi tiêu trong tương lai của tôi dựa trên dự liệu này: ${JSON.stringify(expenseData)}`;
+
+//     // Gửi yêu cầu đến Gemini AI
+//     const response = await model.generateContent(prompt);
+//     const analysis = await response.response.text(); // Lấy nội dung phản hồi
+
+//     res.json({ analysis });
+//   } catch (err) {
+//     console.error("❌ Lỗi trong analyzeExpenses:", err);
+//     res.status(500).json({ error: "Lỗi server khi phân tích chi tiêu" });
+//   }
+// };
+
+
 exports.createExpense = async (req, res) => {
   try {
     console.log("📌 Dữ liệu nhận từ client:", req.body);

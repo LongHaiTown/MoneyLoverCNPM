@@ -58,9 +58,15 @@ const TransactionList = ({ expenses }) => {
       {transactions.map((transaction, index) => (
         <div key={index} className="transaction-group">
           <div className="transaction-group-header">
-            <h3 className="transaction-date">
-              {transaction.date}, {getDayOfWeek(transaction.date)}
-            </h3>
+          <h3 className="transaction-date">
+  {new Date(transaction.date).toLocaleDateString("vi-VN", {
+    weekday: "long",
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  })}
+</h3>
+
             <div className="transaction-total">
               <p>
                 Thu nhập: <span className="income">+{transaction.totalIncome.toLocaleString()} VND</span>
