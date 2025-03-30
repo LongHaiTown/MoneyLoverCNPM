@@ -396,12 +396,18 @@ button:active {
  max-height: 90vh; /* Giới hạn chiều cao */
 }
 
+.model-contentt button
+{
+  background-color: #2a9d8f;
+}
+
 /* Header của Modal */
 .modal-header {
  padding: 15px 20px; /* Đồng bộ padding */
  border-bottom: 1px solid #e0e0e0; /* Giữ border */
- display: flex;
- justify-content: space-between;
+ display: contents;
+ /* justify-content: space-between; */
+justify-content: space-between;
  align-items: center;
  background-color: #f8f9fa; /* Nền nhẹ */
  flex-shrink: 0; /* Không co lại */
@@ -409,36 +415,39 @@ button:active {
 /* Cấu trúc JSX mới được ưu tiên: */
 .modal-header-title h3,
 /* Hoặc cấu trúc cũ: */
-.modal-header h3 {
+.modal-header .header0 {
  font-size: 1.15rem; /* Điều chỉnh cỡ chữ */
  font-weight: 600;
  color: #333; /* Giữ màu cũ */
  margin: 0;
+ text-align: center;
 }
 
 /* Nút Đóng (Close Button) trong Modal Header */
 /* Sử dụng cấu trúc JSX mới nếu có: .modal-header-close .close-button */
 /* Hoặc dùng selector cũ nếu giữ nguyên JSX: .modal-header .close-button */
-.modal-header .close-button {
- background: none; /* Không nền */
- border: none; /* Không viền */
- color: #6c757d; /* Màu icon xám */
- padding: 0; /* Reset padding */
- font-size: 1.8rem; /* Kích thước cho icon X */
- line-height: 1; /* Căn giữa icon */
- width: 32px; /* Kích thước cố định để tạo hình tròn */
- height: 32px;
- border-radius: 50%; /* Bo tròn */
+.modal-header .button-close {
  display: flex; /* Để căn giữa icon bên trong */
- align-items: center;
- justify-content: center;
+ cursor: pointer;
  transition: background-color 0.2s ease, color 0.2s ease; /* Thêm transition */
-}
-.modal-header .close-button:hover {
- background-color: #f0f0f0; /* Nền xám nhạt khi hover */
- color: #343a40; /* Màu icon đậm hơn */
+ text-align: center;
 }
 
+.close-button
+{
+  cursor: pointer;
+}
+
+.modal-header .header2
+{
+  display: flex;
+  flex-direction: column;
+}
+
+.header2 h3{
+  text-align: center;
+  padding-bottom: 10px;
+}
 /* Body của Modal */
 .modal-body {
    padding: 20px;
@@ -454,12 +463,12 @@ button:active {
  background-color: var(--primary-color);
  color: var(--text-light);
  border: none;
- padding: 10px 20px;
+ padding: 10px;
  font-weight: 500;
  border-radius: var(--button-border-radius);
  width: auto; /* Bỏ width cố định */
  display: block; /* Để dùng margin auto căn giữa */
- margin: 20px auto 10px; /* Khoảng cách trên/dưới và căn giữa */
+ margin-bottom: 20px; /* Khoảng cách trên/dưới và căn giữa */
  min-width: 130px; /* Chiều rộng tối thiểu */
 }
 .modal-content form button[type="submit"]:hover {
@@ -467,7 +476,12 @@ button:active {
   box-shadow: 0 2px 5px rgba(0,0,0,0.15);
 }
 
-
+.header0 button
+{
+  background-color: #f0f0f0;
+  display: flex;
+  justify-items: center;
+}
 /* --- (Tùy chọn) Nút Sửa/Xóa trong danh sách item --- */
 .expense-action-buttons button {
  padding: 5px 10px; /* Nhỏ hơn cho nút trong danh sách */

@@ -198,25 +198,24 @@ const Transactions = () => {
             <div className="modal-content">
               {/* Header của Modal */}
               <div className="modal-header">
-                <div className="modal-header-title">
-                   <h3>Thêm mới giao dịch</h3>
-                </div>
-                <div className="modal-header-close">
-                  <button
-                    className="close-button"
+              <div className="button-close" typeof="button"
                     title="Đóng" // Thêm tooltip
                     onClick={() => setShowForm(false)}
                   >
-                    ✕ {/* Icon X */}
-                  </button>
-                </div>
+                    ✕  {/* Icon X */}
+                  </div>
+                <div className="modal-header-title">
+                  <div className="header0">Thêm mới giao dịch
+                   </div>
+              </div>
               </div>
               {/* Nội dung của Modal */}
               <div className="modal-body">
                 {/* Truyền danh sách ví vào Form để chọn */}
                 <ExpenseForm onSubmit={handleCreateExpense} wallets={wallets} />
-              </div>
+              
             </div>
+          </div>
           </div>
         )}
 
@@ -226,17 +225,17 @@ const Transactions = () => {
             <div className="modal-content">
               {/* Header của Modal */}
               <div className="modal-header">
-                 <div className="modal-header-title">
-                    <h3>Danh sách</h3>
-                 </div>
-                 <div className="modal-header-close">
-                    <button
+                 <div className="header2">
+                 
+                    
+                    <div typeof="button"
                       className="close-button"
                       title="Đóng"
                       onClick={() => setShowExpenseList(false)}
                     >
                       ✕ {/* Icon X */}
-                    </button>
+                    </div>
+                    <h3>Danh sách</h3>
                  </div>
               </div>
               {/* Nội dung của Modal */}
@@ -254,11 +253,10 @@ const Transactions = () => {
             <div className="modal-content">
               {/* Header của Modal */}
               <div className="modal-header">
-                 <div className="modal-header-title">
+                 
                     {/* Hiển thị tên ví trong tiêu đề */}
                     <h3>Giao dịch của {selectedWallet.name}</h3>
-                 </div>
-                 <div className="modal-header-close">
+                    
                     <button
                       className="close-button"
                       title="Đóng"
@@ -266,7 +264,8 @@ const Transactions = () => {
                     >
                        ✕ {/* Icon X */}
                     </button>
-                 </div>
+                 
+                 
               </div>
               {/* Nội dung của Modal */}
               <div className="modal-body">
