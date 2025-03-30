@@ -1,5 +1,9 @@
 .expense-list-container {
+  max-width: 800px;
+  margin: 0 auto;
   padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
 }
 
 .expense-list-header {
@@ -11,29 +15,30 @@
 
 .expense-list-header h2 {
   font-size: 1.5rem;
+  color: #333;
   margin: 0;
 }
 
 .wallet-selection {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background-color: #f0f0f0;
-  padding: 5px 10px;
-  border-radius: 5px;
+  text-align: right;
 }
 
 .wallet-selection span {
-  font-size: 0.9rem;
+  display: block;
+  font-size: 1rem;
+  color: #555;
 }
 
-.balance {
-  color: #666;
+.wallet-selection .balance {
+  font-weight: 500;
+  color: #1a73e8;
 }
 
-.expense-list-container p {
+.no-expenses {
   text-align: center;
   color: #666;
+  font-size: 1.1rem;
+  padding: 20px;
 }
 
 .expense-list {
@@ -43,66 +48,112 @@
 }
 
 .expense-group {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.2s ease-in-out;
+}
+
+.expense-group:hover {
+  transform: translateY(-2px);
 }
 
 .expense-group-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  padding: 15px 20px;
+  background-color: #f1f3f4;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .expense-date {
   font-size: 1.2rem;
-  font-weight: bold;
+  font-weight: 600;
   color: #333;
   margin: 0;
 }
 
 .expense-total {
-  font-size: 1rem;
-  font-weight: bold;
+  text-align: right;
+}
+
+.expense-total p {
+  margin: 5px 0;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.expense-total .income {
+  color: #1a73e8;
+  font-weight: 500;
+}
+
+.expense-total .expense {
+  color: #d32f2f;
+  font-weight: 500;
+}
+
+.expense-items {
+  padding: 10px 0;
 }
 
 .expense-item {
   display: flex;
   align-items: center;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 10px;
-  gap: 10px;
+  padding: 12px 20px;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.2s ease-in-out;
 }
 
-.expense-avatar {
-  width: 40px;
-  height: 40px;
+.expense-item:hover {
+  background-color: #f5f7fa;
 }
 
-.avatar-placeholder {
-  width: 100%;
-  height: 100%;
-  background-color: #ddd;
-  border-radius: 50%;
+.expense-icon-wrapper {
+  margin-right: 15px;
+}
+
+.expense-icon {
+  font-size: 1.5rem;
+}
+
+.income-icon {
+  color: #1a73e8;
+}
+
+.expense-icon {
+  color: #d32f2f;
 }
 
 .expense-details {
   flex: 1;
+}
+
+.expense-header {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .expense-title {
-  font-weight: bold;
-  margin-bottom: 5px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #333;
+  margin: 0;
+}
+
+.expense-time {
+  font-size: 0.9rem;
+  color: #888;
+  margin: 0;
 }
 
 .expense-description {
-  color: #666;
   font-size: 0.9rem;
+  color: #777;
+  margin: 3px 0 0;
 }
 
 .expense-actions {
@@ -112,24 +163,25 @@
 }
 
 .expense-amount {
-  font-weight: bold;
   font-size: 1rem;
+  font-weight: 500;
 }
 
-.expense-actions button {
-  background-color: #ff4d4d;
+.delete-button {
+  background-color: #ff4d4f;
   color: white;
   border: none;
   padding: 5px 10px;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease-in-out;
 }
 
-.expense-form-section {
-  margin-top: 20px;
+.delete-button:hover {
+  background-color: #d9363e;
 }
 
-.expense-form-section h3 {
-  font-size: 1.2rem;
-  margin-bottom: 10px;
+.delete-button:active {
+  background-color: #b32d2e;
 }
