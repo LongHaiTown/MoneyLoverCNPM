@@ -6,13 +6,22 @@
 
 
 .budget-header {
-  font-size: 1.8rem;      /* Giảm nhẹ size nếu 2rem hơi lớn */
-  font-weight: 600;       /* Tăng độ đậm */
-  color: var(--text-dark, #333); /* Dùng biến màu text đậm */
-  margin-bottom: 30px;    /* Tăng khoảng cách dưới một chút */
-  padding-bottom: 15px;   /* Thêm padding dưới */
-  border-bottom: 1px solid var(--group-border-color, #eee); /* Thêm đường kẻ dưới nhẹ nhàng */
-  text-align: center;     /* Giữ căn giữa */
+     /* Giảm nhẹ size nếu 2rem hơi lớn */
+     background-color: #d3d3d3; /* Giữ màu nền cũ */
+     padding: 50px;
+     text-align: center;
+     border-radius: 10px;
+     margin-bottom: 20px;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     padding-top: 50px;
+     margin-top: 50px;
+}
+
+.budget-header h1  
+{
+  font-size: 2rem;
 }
 
 .budget-tabs {
@@ -110,6 +119,13 @@
 .budget-category.near-limit {
   border-color: red;
 }
+
+.budget-label
+{
+  display: flex;
+  justify-content: center;
+}
+
 
 .category-avatar {
   width: 40px;
@@ -236,4 +252,19 @@
 
 .modal-content button[type="submit"]:hover {
   background-color: #555;
+}
+
+.budget-label input {
+  text-align: center;
+  width: 80px;
+  height: 20px;
+  font-size: 0.95rem;
+  border: 2px solid #2a9d8f;
+  border-radius: 5px;
+  outline: none;
+}
+
+input:focus {
+  border-color: #2a9d8f;
+  box-shadow: 0 0 5px rgba(0, 91, 187, 0.5);
 }

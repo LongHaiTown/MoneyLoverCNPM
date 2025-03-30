@@ -14,14 +14,25 @@
     font-size: 2rem;
     margin: 0;
   }
+
+  h2{
+    text-align: center;
+    margin-bottom: -10px;
+  }
   
   .summary-btn {
-    background-color: #000;
+    background-color: gray;
     color: #fff;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    margin-top: 10px;
+  }
+
+  .summary-btn:hover
+  {
+    background-color: #2a9d8f;
   }
   
   .tabs {
@@ -40,9 +51,9 @@
     cursor: pointer;
   }
   
-  .tabs button:hover {
-    background-color: #ddd;
-  }
+  /* .tabs button:hover {
+    background-color: #39726c;
+  } */
   
   .summary {
     display: flex;
@@ -89,20 +100,22 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     display: flex;
-    flex-direction: column; /* Xếp các nút theo cột */
+    flex-direction: column-reverse; /* Xếp các nút theo cột */
     gap: 10px; /* Khoảng cách giữa các nút */
   }
   
   .chart-buttons button {
     padding: 10px;
-    border: 1px solid #ccc;
+    margin-right: 2px;
+    /* border: 1px solid #ccc; */
     cursor: pointer;
     border-radius: 5px;
+    background-color: #2a9d8f;
   }
   
-  .chart-buttons button:hover {
-    background-color: #ddd;
-  }
+  /* .chart-buttons button:hover {
+    background-color: #2a9d8f;
+  } */
   .pie-charts-container {
     display: flex;
     justify-content: space-between;

@@ -32,7 +32,7 @@ const BudgetList = () => {
   return (
     <div>
       <BudgetForm onSubmit={handleCreateBudget} />
-      <h2>Budget List</h2>
+      <h1>Budget List</h1>
       <div>
         <label>
           Month:

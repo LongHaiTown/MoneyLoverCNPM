@@ -35,11 +35,11 @@ const Budget = () => {
    
   return (
     <div className="budget-container" id="budgets">
-      <h2 className="budget-header">Ngân sách</h2>
-      <div>
-        <label>
-          Month:
-          <input
+      <div className="budget-header"><h1>Ngân sách</h1></div>
+      <div className="budget-label">
+        <label style={{paddingRight:"20px"}}>
+          Month :
+          <input style={{ textAlign:"center "}}
             type="number"
             value={month}
             onChange={(e) => setMonth(parseInt(e.target.value))}
@@ -48,8 +48,8 @@ const Budget = () => {
           />
         </label>
         <label>
-          Year:
-          <input
+          Year :
+          <input style={{ textAlign:"center "}}
             type="number"
             value={year}
             onChange={(e) => setYear(parseInt(e.target.value))}

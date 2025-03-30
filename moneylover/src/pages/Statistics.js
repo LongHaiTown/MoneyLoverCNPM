@@ -408,13 +408,13 @@ const Statistics = () => {
             <div className="chart-type-buttons">
               <button
                 onClick={() => setChartType('bar')}
-                style={{ backgroundColor: chartType === 'bar' ? '#ddd' : '#f0f0f0' }}
+                style={{ backgroundColor: chartType === 'bar' ? '#2a9d8f' : '#f0f0f0' }}
               >
                 Biểu đồ cột
               </button>
               <button
                 onClick={() => setChartType('line')}
-                style={{ backgroundColor: chartType === 'line' ? '#ddd' : '#f0f0f0' }}
+                style={{ backgroundColor: chartType === 'line' ? '#2a9d8f' : '#f0f0f0' }}
               >
                 Biểu đồ đường
               </button>
@@ -426,19 +426,19 @@ const Statistics = () => {
             <div className="time-range-buttons">
               <button
                 onClick={() => setTimeRange(2)}
-                style={{ backgroundColor: timeRange === 2 ? '#ddd' : '#f0f0f0' }}
+                style={{ backgroundColor: timeRange === 2 ? '#2a9d8f' : '#ddd' }}
               >
                 2 tháng
               </button>
               <button
                 onClick={() => setTimeRange(4)}
-                style={{ backgroundColor: timeRange === 4 ? '#ddd' : '#f0f0f0' }}
+                style={{ backgroundColor: timeRange === 4 ? '#2a9d8f' : '#f0f0f0' }}
               >
                 4 tháng
               </button>
               <button
                 onClick={() => setTimeRange(6)}
-                style={{ backgroundColor: timeRange === 6 ? '#ddd' : '#f0f0f0' }}
+                style={{ backgroundColor: timeRange === 6 ? '#2a9d8f' : '#f0f0f0' }}
               >
                 6 tháng
               </button>
@@ -452,7 +452,7 @@ const Statistics = () => {
                 <button
                   key={month}
                   onClick={() => setSelectedMonth(month)}
-                  style={{ backgroundColor: selectedMonth === month ? '#ddd' : '#f0f0f0' }}
+                  style={{ backgroundColor: selectedMonth === month ? '#2a9d8f' : '#f0f0f0' }}
                 >
                   {month}
                 </button>

@@ -167,7 +167,9 @@ const Transactions = () => {
 
       {/* Phần nhập liệu và nút chức năng */}
       <section className="transaction-section">
-        <h2>Giao dịch</h2>
+        <div className="header">
+          <h1>Giao dịch</h1>
+          </div>
         {/* Input nhập giao dịch nhanh */}
         <div className="quick-transaction">
           <input
@@ -176,7 +178,7 @@ const Transactions = () => {
             value={quickTransaction}
             onChange={(e) => setQuickTransaction(e.target.value)}
             // Cho phép gửi bằng Enter
-            onKeyPress={(e) => { if (e.key === 'Enter') handleQuickTransaction(); }}
+            onKeyUp={(e) => { if (e.key === 'Enter') handleQuickTransaction(); }}
           />
           <button onClick={handleQuickTransaction}>Gửi</button>
         </div>
