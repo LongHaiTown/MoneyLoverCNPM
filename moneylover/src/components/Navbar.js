@@ -34,7 +34,7 @@ function Navbar() {
 
       {/* Navbar Links */}
       <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-        <button className="Nav-Button-routing" onClick={() => handleScroll("transactions")}>
+        <button onClick={() => handleScroll("transactions")} style={{ padding: "5px 10px", textDecoration: "none", color: "#333" }}>
           Giao dịch
         </button>
         <button className="Nav-Button-routing" onClick={() => handleScroll("budgets")} >

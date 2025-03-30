@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './Statistics.css';
+import { getExpenses } from "../services/api";
+
 import { Bar, Line, Pie } from 'react-chartjs-2';
+
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -27,185 +30,196 @@ ChartJS.register(
   ArcElement
 );
 
-const sampleExpenses = [
-  {
-    id: "1",
-    name: "Mua sắm",
-    type: "expense",
-    date: "2025-01-15T00:00:00.000Z",
-    amount: 2000000,
-    title: "Mua quần áo",
-    wallet: { id: 7, name: "Ví tiền mặt" },
-    category: { category_id: 2, category_name: "Mua sắm" },
-  },
-  {
-    id: "2",
-    name: "Ăn uống",
-    type: "expense",
-    date: "2025-01-20T00:00:00.000Z",
-    amount: 500000,
-    title: "Ăn tối ngoài",
-    wallet: { id: 7, name: "Ví tiền mặt" },
-    category: { category_id: 1, category_name: "Ăn uống" },
-  },
-  {
-    id: "3",
-    name: "Lương",
-    type: "income",
-    date: "2025-01-05T00:00:00.000Z",
-    amount: 10000000,
-    title: "Lương tháng 1",
-    wallet: { id: 7, name: "Ví tiền mặt" },
-    category: { category_id: 3, category_name: "Thu nhập" },
-  },
-  {
-    id: "4",
-    name: "Du lịch",
-    type: "expense",
-    date: "2025-02-10T00:00:00.000Z",
-    amount: 3000000,
-    title: "Chuyến đi Đà Lạt",
-    wallet: { id: 7, name: "Ví tiền mặt" },
-    category: { category_id: 4, category_name: "Du lịch" },
-  },
-  {
-    id: "5",
-    name: "Học tập",
-    type: "expense",
-    date: "2025-02-15T00:00:00.000Z",
-    amount: 1500000,
-    title: "Mua sách",
-    wallet: { id: 7, name: "Ví tiền mặt" },
-    category: { category_id: 5, category_name: "Học tập" },
-  },
-  {
-    id: "6",
-    name: "Lương",
-    type: "income",
-    date: "2025-02-05T00:00:00.000Z",
-    amount: 10000000,
-    title: "Lương tháng 2",
-    wallet: { id: 7, name: "Ví tiền mặt" },
-    category: { category_id: 3, category_name: "Thu nhập" },
-  },
-  {
-    id: "7",
-    name: "Mua sắm",
-    type: "expense",
-    date: "2025-03-10T00:00:00.000Z",
-    amount: 2500000,
-    title: "Mua giày",
-    wallet: { id: 7, name: "Ví tiền mặt" },
-    category: { category_id: 2, category_name: "Mua sắm" },
-  },
-  {
-    id: "8",
-    name: "Ăn uống",
-    type: "expense",
-    date: "2025-03-12T00:00:00.000Z",
-    amount: 700000,
-    title: "Ăn trưa",
-    wallet: { id: 7, name: "Ví tiền mặt" },
-    category: { category_id: 1, category_name: "Ăn uống" },
-  },
-  {
-    id: "9",
-    name: "Lương",
-    type: "income",
-    date: "2025-03-05T00:00:00.000Z",
-    amount: 10000000,
-    title: "Lương tháng 3",
-    wallet: { id: 7, name: "Ví tiền mặt" },
-    category: { category_id: 3, category_name: "Thu nhập" },
-  },
-  {
-    id: "10",
-    name: "Học tập",
-    type: "expense",
-    date: "2025-04-01T00:00:00.000Z",
-    amount: 1000000,
-    title: "Khóa học online",
-    wallet: { id: 7, name: "Ví tiền mặt" },
-    category: { category_id: 5, category_name: "Học tập" },
-  },
-];
-
+// const sampleExpenses = [
+//   {
+//     id: "1",
+//     name: "Mua sắm",
+//     type: "expense",
+//     date: "2025-01-15T00:00:00.000Z",
+//     amount: 2000000,
+//     title: "Mua quần áo",
+//     wallet: { id: 7, name: "Ví tiền mặt" },
+//     category: { category_id: 2, category_name: "Mua sắm" },
+//   },
+//   {
+//     id: "2",
+//     name: "Ăn uống",
+//     type: "expense",
+//     date: "2025-01-20T00:00:00.000Z",
+//     amount: 500000,
+//     title: "Ăn tối ngoài",
+//     wallet: { id: 7, name: "Ví tiền mặt" },
+//     category: { category_id: 1, category_name: "Ăn uống" },
+//   },
+//   {
+//     id: "3",
+//     name: "Lương",
+//     type: "income",
+//     date: "2025-01-05T00:00:00.000Z",
+//     amount: 10000000,
+//     title: "Lương tháng 1",
+//     wallet: { id: 7, name: "Ví tiền mặt" },
+//     category: { category_id: 3, category_name: "Thu nhập" },
+//   },
+//   {
+//     id: "4",
+//     name: "Du lịch",
+//     type: "expense",
+//     date: "2025-02-10T00:00:00.000Z",
+//     amount: 3000000,
+//     title: "Chuyến đi Đà Lạt",
+//     wallet: { id: 7, name: "Ví tiền mặt" },
+//     category: { category_id: 4, category_name: "Du lịch" },
+//   },
+//   {
+//     id: "5",
+//     name: "Học tập",
+//     type: "expense",
+//     date: "2025-02-15T00:00:00.000Z",
+//     amount: 1500000,
+//     title: "Mua sách",
+//     wallet: { id: 7, name: "Ví tiền mặt" },
+//     category: { category_id: 5, category_name: "Học tập" },
+//   },
+//   {
+//     id: "6",
+//     name: "Lương",
+//     type: "income",
+//     date: "2025-02-05T00:00:00.000Z",
+//     amount: 10000000,
+//     title: "Lương tháng 2",
+//     wallet: { id: 7, name: "Ví tiền mặt" },
+//     category: { category_id: 3, category_name: "Thu nhập" },
+//   },
+//   {
+//     id: "7",
+//     name: "Mua sắm",
+//     type: "expense",
+//     date: "2025-03-10T00:00:00.000Z",
+//     amount: 2500000,
+//     title: "Mua giày",
+//     wallet: { id: 7, name: "Ví tiền mặt" },
+//     category: { category_id: 2, category_name: "Mua sắm" },
+//   },
+//   {
+//     id: "8",
+//     name: "Ăn uống",
+//     type: "expense",
+//     date: "2025-03-12T00:00:00.000Z",
+//     amount: 700000,
+//     title: "Ăn trưa",
+//     wallet: { id: 7, name: "Ví tiền mặt" },
+//     category: { category_id: 1, category_name: "Ăn uống" },
+//   },
+//   {
+//     id: "9",
+//     name: "Lương",
+//     type: "income",
+//     date: "2025-03-05T00:00:00.000Z",
+//     amount: 10000000,
+//     title: "Lương tháng 3",
+//     wallet: { id: 7, name: "Ví tiền mặt" },
+//     category: { category_id: 3, category_name: "Thu nhập" },
+//   },
+//   {
+//     id: "10",
+//     name: "Học tập",
+//     type: "expense",
+//     date: "2025-04-01T00:00:00.000Z",
+//     amount: 1000000,
+//     title: "Khóa học online",
+//     wallet: { id: 7, name: "Ví tiền mặt" },
+//     category: { category_id: 5, category_name: "Học tập" },
+//   },
+// ];
 const Statistics = () => {
   const [expenses, setExpenses] = useState([]);
   const [timeRange, setTimeRange] = useState(2);
   const [chartType, setChartType] = useState('bar');
   const [activeTab, setActiveTab] = useState('time');
-  const [selectedMonth, setSelectedMonth] = useState('Jan'); // Mặc định là tháng 1
-
+  const [selectedMonth, setSelectedMonth] = useState('Mar'); // Mặc định là tháng 3
+  const fetchExpenses = async () => {
+    try {
+      const res = await getExpenses();
+      console.log("📌 Danh sách giao dịch nhận được cho thống kê:", res.data);
+      setExpenses(res.data);
+    } catch (err) {
+      console.error("❌ Lỗi khi lấy giao dịch:", err);
+    }
+  };
   useEffect(() => {
-    setExpenses(sampleExpenses);
+    // Giả lập gọi API
+    fetchExpenses();
   }, []);
 
   const processData = () => {
     if (!expenses.length) return { totalIncome: 0, totalExpense: 0, monthlyData: {}, categoryData: {}, balanceTrend: [] };
-
+  
     const currentDate = new Date('2025-03-26');
     const startDate = new Date(currentDate);
     startDate.setMonth(currentDate.getMonth() - timeRange);
-
+  
     const filteredExpenses = expenses.filter(exp => {
       const expDate = new Date(exp.date);
       return expDate >= startDate && expDate <= currentDate;
     });
-
+  
     const totalIncome = filteredExpenses
-      .filter(exp => exp.type === 'income')
+      .filter(exp => exp.category?.type === 'income') // Sử dụng exp.category.type
       .reduce((sum, exp) => sum + exp.amount, 0);
+  
     const totalExpense = filteredExpenses
-      .filter(exp => exp.type === 'expense')
+      .filter(exp => !exp.category?.type || exp.category.type === 'expense') // Giả định nếu không có type thì là expense
       .reduce((sum, exp) => sum + exp.amount, 0);
-
+  
     const monthlyData = {};
     filteredExpenses.forEach(exp => {
       const month = new Date(exp.date).toLocaleString('default', { month: 'short' });
       if (!monthlyData[month]) {
         monthlyData[month] = { income: 0, expense: 0 };
       }
-      if (exp.type === 'income') {
+      if (exp.category?.type === 'income') { // Sử dụng exp.category.type
         monthlyData[month].income += exp.amount;
       } else {
         monthlyData[month].expense += exp.amount;
       }
     });
-
+  
     // Dữ liệu danh mục theo tháng được chọn
     const categoryData = {};
     filteredExpenses
       .filter(exp => new Date(exp.date).toLocaleString('default', { month: 'short' }) === selectedMonth)
       .forEach(exp => {
-        const categoryName = exp.category.category_name;
+        // Lấy tên danh mục từ category.name, nếu không có thì dùng "Không xác định"
+        const categoryName = exp.category?.name || "Không xác định";
+  
         if (!categoryData[categoryName]) {
           categoryData[categoryName] = { income: 0, expense: 0 };
         }
-        if (exp.type === 'income') {
+        if (exp.category?.type === 'income') { // Sử dụng exp.category.type
           categoryData[categoryName].income += exp.amount;
         } else {
           categoryData[categoryName].expense += exp.amount;
         }
       });
-
+  
     const balanceTrend = [];
     let runningBalance = 0;
     const sortedExpenses = [...filteredExpenses].sort((a, b) => new Date(a.date) - new Date(b.date));
     sortedExpenses.forEach(exp => {
-      if (exp.type === 'income') {
+      if (exp.category?.type === 'income') { // Sử dụng exp.category.type
         runningBalance += exp.amount;
       } else {
         runningBalance -= exp.amount;
       }
       balanceTrend.push({ date: exp.date, balance: runningBalance });
     });
-
+  
     return { totalIncome, totalExpense, monthlyData, categoryData, balanceTrend };
   };
-
+  
   const { totalIncome, totalExpense, monthlyData, categoryData, balanceTrend } = processData();
-
+  
   // Dữ liệu cho biểu đồ cột theo thời gian
   const timeBarChartData = {
     labels: Object.keys(monthlyData),
@@ -222,7 +236,7 @@ const Statistics = () => {
       },
     ],
   };
-
+  
   // Dữ liệu cho biểu đồ đường theo thời gian (số dư)
   const timeLineChartData = {
     labels: Object.keys(monthlyData),
@@ -235,7 +249,7 @@ const Statistics = () => {
       },
     ],
   };
-
+  
   // Dữ liệu cho biểu đồ tròn thu nhập theo danh mục
   const incomePieChartData = {
     labels: Object.keys(categoryData).filter(category => categoryData[category].income > 0),
@@ -263,7 +277,7 @@ const Statistics = () => {
       },
     ],
   };
-
+  
   // Dữ liệu cho biểu đồ tròn chi tiêu theo danh mục
   const expensePieChartData = {
     labels: Object.keys(categoryData).filter(category => categoryData[category].expense > 0),
@@ -291,7 +305,7 @@ const Statistics = () => {
       },
     ],
   };
-
+  
   // Dữ liệu cho biểu đồ số dư
   const balanceLineChartData = {
     labels: balanceTrend.map(trend => new Date(trend.date).toLocaleString('default', { month: 'short', day: 'numeric' })),
@@ -307,6 +321,7 @@ const Statistics = () => {
 
   // Lấy danh sách tháng từ dữ liệu
   const availableMonths = Array.from(new Set(expenses.map(exp => new Date(exp.date).toLocaleString('default', { month: 'short' }))));
+
 
   return (
     <div className="statistics-container">
@@ -355,21 +370,21 @@ const Statistics = () => {
               />
             ) : (
               <Line
-          data={balanceLineChartData}
-          options={{
-            responsive: true,
-            plugins: {
-              legend: { position: 'top' },
-              title: { display: true, text: 'Xu hướng số dư' },
-            },
-            scales: {
-              y: {
-                beginAtZero: true,
-                title: { display: true, text: 'Số dư (VND)' },
-              },
-            },
-          }}
-        />
+                data={balanceLineChartData}
+                options={{
+                  responsive: true,
+                  plugins: {
+                    legend: { position: 'top' },
+                    title: { display: true, text: 'Xu hướng số dư' },
+                  },
+                  scales: {
+                    y: {
+                      beginAtZero: true,
+                      title: { display: true, text: 'Số dư (VND)' },
+                    },
+                  },
+                }}
+              />
             )
           ) : (
             <div className="pie-charts-container">

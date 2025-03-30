@@ -50,16 +50,16 @@ button:active {
 
 /* --- Header chính --- */
 .header {
- background-color: #d3d3d3; /* Giữ màu nền cũ */
- padding: 50px;
- text-align: center;
- border-radius: 10px;
- margin-bottom: 20px;
- display: flex;
- flex-direction: column;
- align-items: center;
- padding-top: 50px;
- margin-top: 70px;
+  background-color: #d3d3d3;
+  padding: 50px;
+  text-align: center;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 50px;
+  margin-top: 70px;
 }
 
 .header h1 {
@@ -262,41 +262,14 @@ button:active {
   color: #555;
 }
 
-.summary-item {
+.recent-transactions .transaction-list {
   display: flex;
-  align-items: baseline; /* Căn theo baseline */
-  gap: 4px;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.summary-item .label {
-  color: #777; /* Màu label nhạt hơn */
-}
-
-.summary-item .value {
-  font-weight: 600; /* Giá trị đậm */
-}
-.summary-item.income .value {
-  color: var(--income-color);
-}
-.summary-item.expense .value,
-.summary-item.total .value[style*="var(--expense-color"] /* Áp dụng cho tổng âm */ {
-  color: var(--expense-color);
-}
-/* Màu cho tổng dương */
-.summary-item.total .value[style*="var(--income-color"] {
-     color: var(--income-color);
-}
-
-
-/* --- Container chứa các item trong ngày --- */
-.items-in-group {
-  padding: 0; /* Thường không cần padding ở đây */
-}
-
-
-/* --- Style cho từng Transaction Item --- */
-/* Sử dụng lại class .transaction-item đã có và tinh chỉnh */
-.transaction-item {
+.transaction-item
+{
   display: flex;
   align-items: center; /* Căn giữa theo chiều dọc */
   padding: 12px 15px; /* Padding đồng bộ với header group */
@@ -369,36 +342,26 @@ button:active {
 }
 /* --- Modal --- */
 .modal {
- position: fixed;
- top: 0;
- left: 0;
- width: 100%;
- height: 100%;
- background: rgba(0, 0, 0, 0.6); /* Tăng độ mờ nền */
- display: flex;
- justify-content: center;
- align-items: center;
- z-index: 1000; /* Đảm bảo nổi lên trên */
- padding: 20px; /* Padding để không chạm màn hình nhỏ */
- box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .modal-content {
- background-color: #FFFFFF;
- border-radius: 10px; /* Giữ bo góc */
- box-shadow: 0 5px 20px rgba(0,0,0,0.2); /* Tăng shadow */
- width: 100%; /* Chiếm hết padding của modal */
- max-width: 550px; /* Điều chỉnh max-width nếu cần */
- /* margin-top: 60px; */ /* Bỏ margin-top, align-items: center của modal sẽ căn giữa */
- overflow: hidden; /* Quan trọng */
- display: flex; /* Bật flex */
- flex-direction: column; /* Xếp dọc header-body-footer */
- max-height: 90vh; /* Giới hạn chiều cao */
-}
-
-.model-contentt button
-{
-  background-color: #2a9d8f;
+  background: #9A36FF;
+  padding: 20px;
+  border-radius: 10px;
+  position: relative;
+  width: 90%;
+  max-width: 400px;
+  max-height: 80vh;
+  overflow-y: auto;
 }
 
 /* Header của Modal */
@@ -441,7 +404,9 @@ justify-content: space-between;
 .modal-header .header2
 {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
 }
 
 .header2 h3{
@@ -495,12 +460,11 @@ justify-content: space-between;
 .expense-action-buttons .btn-edit:hover {
   background-color: #5a6268;
 }
-.expense-action-buttons .btn-delete {
-  background-color: var(--danger-color); /* Màu nguy hiểm */
-}
-.expense-action-buttons .btn-delete:hover {
-  background-color: var(--danger-color-hover);
+
+.close-button:active {
+  background-color: #b32d2e;
 }
 
-
-/* === KẾT THÚC FILE CSS === */
+/* select{
+  color: #fff;
+} */
