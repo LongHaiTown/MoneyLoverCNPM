@@ -46,7 +46,6 @@ const ExpenseList = ({ onUpdate }) => {
       .catch((err) => console.error("❌ Lỗi khi xóa expense:", err));
   };
 
-  // Group expenses by date
   const groupedExpenses = expenses.reduce((acc, expense) => {
     const date = expense.date;
     if (!acc[date]) {
@@ -57,27 +56,28 @@ const ExpenseList = ({ onUpdate }) => {
       };
     }
 
-    acc[date].totalBalance += expense.amount;
+    const type = expense.category?.type || (expense.amount >= 0 ? "income" : "outcome");
+    const amount = Math.abs(expense.amount); // đảm bảo dương
+
+    // ✅ Trừ vào tổng nếu là outcome, cộng nếu là income
+    acc[date].totalBalance += type === "income" ? amount : -amount;
+
     acc[date].items.push({
       id: expense.id,
       title: expense.title,
       description: `Category: ${expense.category?.name || expense.category_id}`,
-      amount: expense.amount,
+      amount: amount,
+      type: type,
     });
 
     return acc;
   }, {});
 
-  // Convert grouped expenses to an array and sort by date (descending)
+
+  // Convert grouped expenses to array and sort by date (desc)
   const groupedExpensesArray = Object.values(groupedExpenses).sort(
     (a, b) => new Date(b.date) - new Date(a.date)
   );
-
-  const getDayOfWeek = (dateString) => {
-    const daysOfWeek = ["Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy"];
-    const date = new Date(dateString);
-    return daysOfWeek[date.getDay()];
-  };
 
   return (
     <div className="expense-list-container">
@@ -96,27 +96,26 @@ const ExpenseList = ({ onUpdate }) => {
           {groupedExpensesArray.map((group, index) => (
             <div key={index} className="expense-group">
               <div className="expense-group-header">
-              <h3 className="transaction-date">
-              {new Date(group.date).toLocaleDateString("vi-VN", {
-                weekday: "long",
-                day: "2-digit",
-                month: "2-digit",
-                year: "numeric",
-              })}
-            </h3>
-
+                <h3 className="transaction-date">
+                  {new Date(group.date).toLocaleDateString("vi-VN", {
+                    weekday: "long",
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                  })}
+                </h3>
                 <p
                   className="expense-total"
                   style={{ color: group.totalBalance >= 0 ? "blue" : "red" }}
                 >
-                  {group.totalBalance >= 0 ? "+" : ""}
-                  {group.totalBalance.toLocaleString()} VND
+                  {group.totalBalance >= 0 ? "+" : "-"}
+                  {Math.abs(group.totalBalance).toLocaleString()} VND
                 </p>
               </div>
+
               {group.items.map((item) => (
                 <div key={item.id} className="expense-item">
                   <div className="expense-avatar">
-                    {/* Placeholder for avatar */}
                     <div className="avatar-placeholder"></div>
                   </div>
                   <div className="expense-details">
@@ -126,15 +125,16 @@ const ExpenseList = ({ onUpdate }) => {
                   <div className="expense-actions">
                     <p
                       className="expense-amount"
-                      style={{ color: item.amount >= 0 ? "blue" : "red" }}
+                      style={{ color: item.type === "income" ? "blue" : "red" }}
                     >
-                      {item.amount >= 0 ? "+" : ""}
+                      {item.type === "income" ? "+" : "-"}
                       {Math.abs(item.amount).toLocaleString()} VND
                     </p>
                     <button onClick={() => handleDelete(item.id)}>Xóa</button>
                   </div>
                 </div>
               ))}
+
             </div>
           ))}
         </div>

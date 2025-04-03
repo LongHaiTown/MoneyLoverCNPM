@@ -80,14 +80,12 @@ const Transactions = () => {
 
   // Xử lý tạo giao dịch từ form
   const handleCreateExpense = (data) => {
-    // Chuyển đổi amount từ string (có thể có dấu phẩy/chấm) thành number
     const amountValue = parseFloat(String(data.amount).replace(/[,.]/g, ''));
     if (isNaN(amountValue)) {
-        console.error("❌ Số tiền không hợp lệ:", data.amount);
-        // Thông báo lỗi cho người dùng
-        return;
+      console.error("❌ Số tiền không hợp lệ:", data.amount);
+      return;
     }
-
+  
     const formattedData = {
       title: data.title,
       amount: amountValue,
@@ -95,18 +93,16 @@ const Transactions = () => {
       category_id: parseInt(data.category_id),
       wallet_id: parseInt(data.wallet_id),
     };
+  
     createExpense(formattedData)
       .then(() => {
-        // Lấy lại dữ liệu mới
-        fetchExpenses();
-        fetchWallets();
-        setShowForm(false); // Đóng form sau khi thành công
+        window.location.reload(); // 🔄 Refresh toàn bộ trang
       })
       .catch((err) => {
-          console.error("❌ Lỗi khi tạo giao dịch:", err);
-          // Hiển thị thông báo lỗi cho người dùng nếu cần
-       });
+        console.error("❌ Lỗi khi tạo giao dịch:", err);
+      });
   };
+  
 
   // Xử lý khi nhấn vào một ví
   const handleWalletClick = (wallet) => {
